@@ -1,0 +1,12 @@
+# Rocker docker image:
+# https://hub.docker.com/r/rocker/rstudio
+
+# Notes on docker run:
+# https://github.com/rocker-org/rocker-versioned/blob/master/rstudio/README.md
+
+
+# 1.\ run build.sh [once!]
+# 2.\ run run.sh OR run_students.sh
+# 3.\ run install_dep.sh
+# 4.\ run users_create.sh [only for students]
+#
