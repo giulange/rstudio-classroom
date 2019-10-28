@@ -12,16 +12,16 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "72D86C0C",
+        "cacheKey" : "2D09F15E",
         "caption" : "Profile2",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Profile2&cache_key=72D86C0C",
-        "displayedObservations" : 113,
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Profile2&cache_key=2D09F15E",
+        "displayedObservations" : "113",
         "environment" : "",
         "expression" : "Profile2",
         "object" : "Profile2",
-        "preview" : 0,
-        "totalObservations" : 113,
-        "variables" : 29
+        "preview" : "0",
+        "totalObservations" : "113",
+        "variables" : "29"
     },
     "read_only" : false,
     "read_only_alternatives" : [

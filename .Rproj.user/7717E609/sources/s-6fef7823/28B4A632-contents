@@ -1,3 +1,8 @@
+
+require(sf)
+require(osmdata)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # EXAMPLE :: MultiPolygon
 # multipolygon_list = list(list(rbind(c(1, 5), c(2, 2), c(4, 1), c(4, 4), c(1, 5))),
                         #  list(rbind(c(0, 2), c(1, 2), c(1, 3), c(0, 3), c(0, 2)))
@@ -14,21 +19,100 @@ ll = list(c(1, 5), c(2, 2), c(4, 1), c(4, 4), c(1, 5))
 l1 = list( rb, rb2 )
 l2 = list( l_rb,l_rb2 )
 
-
-require(sf)
 st_multipolygon( l1 )
 st_multipolygon( l2 )
 
 
-40 33 31 # lat
-14 58 46 # lon
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 40 33 31 # lat
+# 14 58 46 # lon
 Lat = 40 + 33/60 + 31/3600
 Lon = 14 + 58/60 + 46/3600
-
 Pimp = st_point( c(Lon,Lat) )
 
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# sfc
+point1 = st_point(c(5, 2))
+point2 = st_point(c(1, 3))
+points_sfc = st_sfc(point1, point2)
+print(points_sfc)
+plot(points_sfc)
 
+# Read:
+st_crs(points_sfc)
+# Write:
+st_crs(points_sfc) <- 4326
+# Read:
+st_crs(points_sfc)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# sf
+point   = st_point(c(10.91571, 44.65191))     # sfg object
+geom    = st_sfc(point, crs = 4326)           # sfc object
+attrib  = data.frame(                         # data.frame object
+  name = "MODENAURB",
+  date = as.Date("2018-01-19"),
+  temperature = 23.5,
+  rainfall = 12.7
+)
+SF = st_sf(attrib, geometry = geom)          # sf object
+
+# current date:
+Sys.Date()
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Steps to create a geospatial/geographic vector data
+# ***METHOD #1 : from scratch***
+#   1.\ create geometry         (purely geometric object)
+#   2.\ geographic localization (geographic building block)
+#   3.\ attributes              (non-geographic attributes)
+# 
+# That is:
+#   1.\ create geometry         st_<<geometry type>>
+#   2.\ geographic localization st_sfc( <<geometries>> , <<CRS>> )
+#   3.\ attributes              st_sf( <<attributes>> , <<geometry col>> )
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ***METHOD #2 : transformation***
+# Convert a data frame storing geospatial data into 
+# an "sf" vector geodata model.
+Profile2_sf = st_as_sf(Profile2,coords = c("X_Coord","Y_Coord"))
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ***METHOD #3 : importing/reading***
+setwd("~/work/Didattica/")
+getwd()
+dir()
+DSM_Improsta <- st_read("Vector-Data/DigitalSoilMap_Improsta.shp")
+plot(DSM_Improsta)
+st_crs(DSM_Improsta)
+
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# plot & CRS conversion:
+Ca = osmdata::getbb("Campania", format_out = "sf_polygon")
+plot(Ca)
+st_crs(Ca)
+
+DSM_Improsta <- st_read("Vector-Data/DigitalSoilMap_Improsta.shp")
+st_crs(DSM_Improsta)
+DSM_Imp_4326 <- st_transform(DSM_Improsta,4326)
+plot(Ca,reset=F)
+plot(st_geometry(DSM_Imp_4326),add=T)
+
+# Nothing visible, why?
+Sa = osmdata::getbb("Salerno", format_out = "sf_polygon")
+plot(Sa,reset=F)
+plot(st_geometry(DSM_Imp_4326),add=T)
+
+Eb = osmdata::getbb("Eboli", format_out = "sf_polygon")
+plot(Eb,reset=F)
+plot(st_geometry(DSM_Imp_4326),add=T)
 
 

@@ -1,3 +1,4 @@
+# required packages dor didactics:
 install.packages('raster', clean = TRUE)
 install.packages('sp', clean = TRUE)
 install.packages('gstat', clean = TRUE) 
@@ -8,7 +9,9 @@ install.packges('devtools',clean = TRUE)
 install.packages('rgdal', clean = TRUE)
 install.packages('sf', clean = TRUE)
 install.packages('rgeos', clean = TRUE)
+install.packages("tmap", clean = TRUE)
 
 # from git:
 devtools::install_github('IVFL-BOKU/sentinel2')
 devtools::install_github('giulange/cubeR')
+
