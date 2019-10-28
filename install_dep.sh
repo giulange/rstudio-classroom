@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#container="rstudio-didattica"
-container="rstudio"
+container="rstudio-classroom"
+#container="rstudio-docente"
 
 # check this link to recognize usefull gdal libraries that can be installed to solve possible dependencies:
 #     https://tracker.debian.org/pkg/gdal
