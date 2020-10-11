@@ -6,10 +6,16 @@
 
 
 # 1.\ run build.sh [once!]
+# 
 # 2.\ run run.sh OR run_students.sh
+# 
 # 3.\ run install_dep.sh [changing argument container] 
-# 4.\ run users_create.sh [only for students]
+# 
+# 4.\ run users_create.sh OR users_create_with_fullName.sh [only for students]
 #
-# docker-docente	––> usr: giuliano, pswd: eRtf321-a2 
-# docker-classroom	––> usr: rstudio , pswd: eRtf321-a2
-#
+# 5.\ run add_DOCENTI.sh [configure add_DOCENTE_2_rstudio.sh & add_DOCENTI.sh before time]
+
+
+# http://rstudio-classroom.ddns.net/
+# rstudio-didattica	––> usr: rstudio , pswd: eRtf321-a2 [DEFAULT] 
+# 

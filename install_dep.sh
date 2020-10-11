@@ -1,6 +1,7 @@
 #!/bin/bash
 
-container="rstudio-classroom"
+container="rstudio-didattica"
+#container="rstudio-classroom"
 #container="rstudio-docente"
 
 # check this link to recognize usefull gdal libraries that can be installed to solve possible dependencies:
@@ -18,8 +19,13 @@ docker exec --privileged --user root -it $container  /bin/bash -c "apt-get updat
 
 # install gdal (check proper version):
 #docker exec --privileged --user root -it $container  /bin/bash -c "apt-get -y install gdal-bin=2.4.0+dfsg-1 libgdal-dev=2.4.0+dfsg-1 python-gdal=2.4.0+dfsg-1 python3-gdal=2.4.0+dfsg-1"
-docker exec --privileged --user root -it $container  /bin/bash -c "apt-get -y install gdal-bin libgdal-dev python-gdal python3-gdal"
+docker exec --privileged --user root -it $container  /bin/bash -c "apt-get -y install gdal-bin libgdal-dev"
+#docker exec --privileged --user root -it $container  /bin/bash -c "apt-get -y install python-gdal" # not working
+docker exec --privileged --user root -it $container  /bin/bash -c "apt-get -y install python3-gdal"
 # manual install required gdal version, from within docker container:
 # https://www.geofis.org/en/install/install-on-linux/install-gdal-from-sources/
 
+
+# TO BE COMPLETED: COPY THE SCRIPT INSIDE CONTAINER AND THEN RUN THE FOLLOWING:
+#docker exec --privileged --user root -it $container  /bin/bash -c "Rscript install_packages.R"
 
