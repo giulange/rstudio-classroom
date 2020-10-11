@@ -10,10 +10,16 @@
 # 2.\ run run.sh OR run_students.sh
 # 
 # 3.\ run install_dep.sh [changing argument container] 
-# 
+#
+# === OLD === 
 # 4.\ run users_create.sh OR users_create_with_fullName.sh [only for students]
 #
 # 5.\ run add_DOCENTI.sh [configure add_DOCENTE_2_rstudio.sh & add_DOCENTI.sh before time]
+# === OLD === 
+# 
+# === NEW ===
+# 4.\ run create_CLASS_*.sh with calls add_USER_2_rstudio.sh adding both students and docenti
+
 
 
 # http://rstudio-classroom.ddns.net/
