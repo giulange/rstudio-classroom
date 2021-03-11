@@ -25,6 +25,8 @@ docker exec --privileged --user root -it $container  /bin/bash -c "apt-get -y in
 # manual install required gdal version, from within docker container:
 # https://www.geofis.org/en/install/install-on-linux/install-gdal-from-sources/
 
+# install libgsl
+docker exec --privileged --user root -it $container  /bin/bash -c "apt install libgsl-dev"
 
 # TO BE COMPLETED: COPY THE SCRIPT INSIDE CONTAINER AND THEN RUN THE FOLLOWING:
 #docker exec --privileged --user root -it $container  /bin/bash -c "Rscript install_packages.R"

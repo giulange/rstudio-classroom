@@ -4,21 +4,17 @@
 
 
 container="rstudio-didattica"
-PSWD="plf2020"
+PSWD="gevs2021"
 
 # ==== DOCENTI ====
-# Giuliano Langella
-echo "Giuliano.Langella"
-./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container
-
-# Domenico Vistocco
-echo "Domenico.Vistocco"
-./add_USER_2_rstudio.sh Domenico.Vistocco domvis2020 $container
+# Giuliano Langella | already existent
+#echo "Giuliano.Langella"
+#./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container
 # ==== DOCENTI ====
-
 
 # ==== STUDENTI ====
-declare -a Students=( "Ludovica.Liguori" "Antonietta.Cameretti" "Gabriella.Orazzo" "Michela.Errico" "Francesca.Serrone" "Mariarosa.Astarita" "Roberta.Nicolosi" )
+declare -a Students=( "Enrica.Pinelli" "Fabiana.Soprano" "Aurora.Borriello" "Venanzio.Ambrosino" "Michela.Ruberto" "Giorgio.Dantonio" "Sabrina.Marsala" "Gaspare.Abate" "Simone.Spina" "Leandro.Buongiovanni" "Vittorio.Iervolino" "Mario.Tatone" ) 
+
 for Student in ${Students[@]} 
  do
   echo "$Student"

@@ -12,6 +12,11 @@ install.packages('gstat', clean = TRUE)
 install.packages('osmdata', clean = TRUE)
 install.packages('devtools',clean = TRUE) 
 
+#  - required package for research
+install.packages("RcppGSL",dependencies=TRUE, clean=TRUE)
+install.packages("Rfast",dependencies=TRUE, clean=TRUE)
+
+
 #  - from git:
 devtools::install_github('IVFL-BOKU/sentinel2')
 devtools::install_github('giulange/cubeR')
