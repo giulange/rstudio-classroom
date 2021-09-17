@@ -1,6 +1,7 @@
 #!/bin/bash
 
-container="rstudio-didattica"
+container=$1
+#container="rstudio-didattica"
 #container="rstudio-classroom"
 #container="rstudio-docente"
 
@@ -26,7 +27,7 @@ docker exec --privileged --user root -it $container  /bin/bash -c "apt-get -y in
 # https://www.geofis.org/en/install/install-on-linux/install-gdal-from-sources/
 
 # install libgsl
-docker exec --privileged --user root -it $container  /bin/bash -c "apt install libgsl-dev"
+docker exec --privileged --user root -it $container  /bin/bash -c "apt -y install libgsl-dev"
 
 # TO BE COMPLETED: COPY THE SCRIPT INSIDE CONTAINER AND THEN RUN THE FOLLOWING:
 #docker exec --privileged --user root -it $container  /bin/bash -c "Rscript install_packages.R"

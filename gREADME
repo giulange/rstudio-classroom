@@ -1,3 +1,25 @@
+# RStudio management
+#
+# 01. Documentation
+# goto https://docs.rstudio.com/ide/server-pro/index.html
+#
+# 02. In case of issues with a Student not able to access the session, 
+# follow instructions given here:
+# https://community.rstudio.com/t/rstudio-server-error-occurred-during-transmission/84258
+# that is:
+# 1. enter the docker
+# 2. go to user home, e.g. cd /home/Gaspare.Abate
+# 3. mv the .rstudio folder to .rstudio_old
+# 4. problem fixed
+
+
+# Some sparse notes
+#   Get the list of students with active sessions
+#     rstudio-server active-sessions 
+# 
+#   Restart RStudio Server
+#     rstudio-server restart
+
 # Rocker docker image:
 # https://hub.docker.com/r/rocker/rstudio
 
@@ -7,7 +29,7 @@
 
 # 1.\ run build.sh [once!]
 # 
-# 2.\ run run.sh OR run_students.sh
+# 2.\ run run_research.sh OR run_students.sh
 # 
 # 3.\ run install_dep.sh [changing argument container] 
 #
