@@ -8,8 +8,8 @@ PSWD="gevs2021"
 
 # ==== DOCENTI ====
 # Giuliano Langella | already existent
-#echo "Giuliano.Langella"
-#./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container
+echo "Giuliano.Langella"
+./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container
 # ==== DOCENTI ====
 
 # ==== STUDENTI ====
