@@ -4,7 +4,6 @@
 install.packages('devtools',clean = TRUE) 
 install.packages('sp', clean = TRUE)
 install.packages('rgdal', clean = TRUE)
-install.packages('sf', clean = TRUE)
 install.packages('rgeos', clean = TRUE)
 install.packages("tmap", clean = TRUE)
 install.packages("plyr", clean = TRUE)
@@ -16,6 +15,7 @@ install.packages('lattice', clean = TRUE)
 install.packages('stringr', clean = TRUE)     # str_remove
 
 #  - required packages for didactics:
+install.packages('sf', clean = TRUE)
 install.packages('raster', clean = TRUE)
 install.packages('gstat', clean = TRUE) 
 install.packages('osmdata', clean = TRUE)
@@ -24,7 +24,7 @@ install.packages('osmdata', clean = TRUE)
 install.packages("RcppGSL",dependencies=TRUE, clean=TRUE)
 install.packages("Rfast",dependencies=TRUE, clean=TRUE)
 
-#  - from git:
+#  - installed from github:
 devtools::install_github('IVFL-BOKU/sentinel2')
 devtools::install_github('giulange/cubeR')
 
