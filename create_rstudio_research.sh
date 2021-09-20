@@ -1,5 +1,6 @@
 #!/bin/bash
-#
+# This script recreate the docker container using the existent docker image,
+# i.e. no new build is performed. For a new build see the script recreate_upgraded_container.sh
 
 container=rstudio_research
 
