@@ -67,10 +67,14 @@ RUN R -e "devtools::install_github('thomasp85/patchwork')"
 #RUN R -e "install.packages('sharpshootR', dependencies=TRUE, clean = TRUE)" # plotSoilRelationGraph
 #RUN R -e "install.packages('binaryLogic', clean = TRUE)" # as.binary
 #RUN R -e "install.packages('Cubist', clean = TRUE)"
-#RUN R -e "install.packages('deepviz', clean = TRUE)"     # to plot keras model graphically
 #RUN R -e "install.packages('magrittr', clean = TRUE)"    # to plot keras model graphically
 #RUN R -e "install.packages('factoextra', clean = TRUE)"  # to handle pca stuff
 RUN R -e "install.packages(c('RcppGSL','Rfast','sharpshootR','binaryLogic','Cubist','deepviz','magrittr','factoextra'),clean=TRUE,dependencies=TRUE)"
+
+# deepviz, install error: 
+#   unable to load shared object '/usr/local/lib/R/site-library/igraph/libs/igraph.so':
+#   libglpk.so.40: cannot open shared object file: No such file or directory
+#RUN R -e "devtools::install_github("andrie/deepviz")"     # to plot keras model graphically
 
 # See https://geocompr.robinlovelace.net/geometric-operations.html#raster-vector
 RUN R -e "remotes::install_github('Nowosad/spDataLarge')"
