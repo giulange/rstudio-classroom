@@ -10,6 +10,8 @@ RUN apt-get -y install vim units libudunits2-dev
 
 RUN apt-get -y install gdal-bin libgdal-dev python3-gdal libgsl-dev
 
+RUN apt-get -y install libmagick++-dev
+
 #--- KERAS ---
 RUN apt -y install python3-pip python3-venv
 #RUN apt -y install build-essential python-dev
@@ -71,11 +73,6 @@ RUN R -e "devtools::install_github('thomasp85/patchwork')"
 #RUN R -e "install.packages('factoextra', clean = TRUE)"  # to handle pca stuff
 RUN R -e "install.packages(c('RcppGSL','Rfast','sharpshootR','binaryLogic','Cubist','deepviz','magrittr','factoextra'),clean=TRUE,dependencies=TRUE)"
 
-# deepviz, install error: 
-#   unable to load shared object '/usr/local/lib/R/site-library/igraph/libs/igraph.so':
-#   libglpk.so.40: cannot open shared object file: No such file or directory
-#RUN R -e "devtools::install_github("andrie/deepviz")"     # to plot keras model graphically
-
 # See https://geocompr.robinlovelace.net/geometric-operations.html#raster-vector
 RUN R -e "remotes::install_github('Nowosad/spDataLarge')"
 
@@ -118,6 +115,10 @@ RUN R -e "install.packages('keras',clean=TRUE)"
 # I downloaded a formerly available version and installed manually from source:
 # install.packages('~/Downloads/soilDB_2.4.1.tar.gz',repos = NULL, type = 'source')
 
+# deepviz and sharpshooter, install error: 
+#   unable to load shared object '/usr/local/lib/R/site-library/igraph/libs/igraph.so':
+#   libglpk.so.40: cannot open shared object file: No such file or directory
+#RUN R -e "devtools::install_github("andrie/deepviz")"     # to plot keras model graphically
 # install sharpshooteR
 # the package is currently (23-Jan-2020) removed from repository.
 # I downloaded a formerly available version and installed manually from source:

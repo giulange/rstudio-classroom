@@ -1,7 +1,22 @@
-# allocate docker container, having access to both media & my home:
+#!/bin/bash
+#
+# NOTES
+#   This script runs a docker container dedicated to research, 
+#   having access to both media & my home.
 
 defval="rstudio_research"
 CONTAINER_NAME=${1:-$defval}
+
+conid=$(docker ps -aqf "name=^${CONTAINER_NAME}$")
+if [ "$conid" != "" ]; then
+  echo "  Container $CONTAINER_NAME exists"
+  echo "    ...stopping $CONTAINER_NAME"
+  docker container stop $CONTAINER_NAME
+  echo "    ...removing $CONTAINER_NAME"
+  docker container rm   $CONTAINER_NAME
+  echo "    ...done"
+  echo ""
+fi
 
 # -- granatellum-gpu:
 docker run -d --name $CONTAINER_NAME \

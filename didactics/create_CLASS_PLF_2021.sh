@@ -3,8 +3,8 @@
 # Please, consider to configure add_DOCENTE_2_rstudio.sh before to run THIS script.
 
 
-container="rstudio-didattica-test"
-PSWD="plf2020"
+container="rstudio_didattica"
+PSWD="plf2021"
 
 # ==== DOCENTI ====
 # Giuliano Langella
@@ -18,11 +18,11 @@ echo "Domenico.Vistocco"
 
 
 # ==== STUDENTI ====
-declare -a Students=( "Ludovica.Liguori" "Antonietta.Cameretti" "Gabriella.Orazzo" "Michela.Errico" "Francesca.Serrone" "Mariarosa.Astarita" "Roberta.Nicolosi" )
+declare -a Students=( "Alessandra.Apostolico" "Giuseppina.Difilippo" "Sara.Esposito" "Federico.Iannuzzi" "Valeria.Iervolino" "Vincenzo.Landolfi" "Marica.Marchese" "Gabriella.Pontillo" "Martina.Salzano" "Roberto.Tieri" "Marco.Vitillo" "Ali.Omar" "Osman.Mohamud" )
+
 for Student in ${Students[@]} 
  do
   echo "$Student"
   ./add_USER_2_rstudio.sh $Student $PSWD $container
 done
 # ==== STUDENTI ====
-
