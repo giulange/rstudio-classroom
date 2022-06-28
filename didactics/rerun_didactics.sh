@@ -24,6 +24,7 @@ echo "Creating container $container..."
 
 # - granatellu-gpu
 docker run -d \
+  --restart always \
   --name $container \
   -v /home/giuliano/work/docker-didactics/home-teachers:/didattica \
   -v /home/giuliano/work/docker-didactics/home-students:/home \

@@ -20,6 +20,7 @@ fi
 
 # -- granatellum-gpu:
 docker run -d --name $CONTAINER_NAME \
+		   --restart always \
 		   -v /media:/media \
 		   -v /home/giuliano:/home/giuliano \
 		   -e USER=giuliano \

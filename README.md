@@ -17,6 +17,30 @@ pswd: eRtf321-a2 [DEFAULT]
  02. In case of issues with a Student not able to access the session, 
  follow instructions given [here](https://community.rstudio.com/t/rstudio-server-error-occurred-during-transmission/84258),
  that is:
+
+ **LATEST:**
+   1. enter the docker
+   2. go to user home
+   3. mv folders according to the following
+
+      Choose which directory or directories to rename, via the command 
+
+      ```
+      sudo mv /home/user1/.local/share/rstudio /home/user1/.local/share/rstudio-old
+      ```
+
+      for example. This table shows the impact of the directory removal.
+
+      Location	                When deleted
+      ~/.config/rstudio/	All user settings (Global Options) lost
+      ~/.local/share/rstudio/	All open files, tabs, and sessions deleted
+
+      In most cases, you will only need to rename the 
+      `.local/share/rstudio` directory to clear out the sessions, and the user settings are retained.
+      Rename both directories to mimic a fresh installation for that user.
+
+
+ OLD-FASHIONED:
    1. enter the docker
    2. go to user home, e.g. cd /home/Gaspare.Abate
    3. mv the .rstudio folder to .rstudio_old
