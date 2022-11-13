@@ -1,12 +1,25 @@
 # rstudio-server
 
-## Web App for Students
+## Deafult credentials
+usr: rstudio 
+pswd: eRtf321-a2 [DEFAULT] 
+
+## Didactics
+### Web App for Students
 The web app is available to students at `http://rstudio-classroom.ddns.net/`
 It is based on the docker container rstudio-didattica using a docker port 8686 which is redirected to the public url above.
 
-### Deafult credentials
-usr: rstudio 
-pswd: eRtf321-a2 [DEFAULT] 
+## Research
+### Image build
+#### DockerHub
+
+See fetch script for the most up-to-date version:
+
+```
+docker pull giulange/pedometrics:rstudio-research-run1
+docker tag giulange/pedometrics:rstudio-research-run1 rstudio_research
+docker image rm giulange/pedometrics:rstudio-research-run1
+```
 
 
 ## RStudio Server Management

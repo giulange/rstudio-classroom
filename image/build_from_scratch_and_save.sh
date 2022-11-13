@@ -12,6 +12,7 @@
 
 # === START ===
 IMAGE=rocker/tidyverse:latest
+PATH_OUT_IMAGES=""
 
 echo "Recreating the $IMAGE RStudio image..."
 
