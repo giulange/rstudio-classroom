@@ -8,8 +8,8 @@ PSWD="plf2022"
 
 # ==== DOCENTI ====
 # Giuliano Langella
-#echo "Giuliano.Langella"
-#./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container 3002
+echo "Giuliano.Langella"
+./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container 3002
 
 # Domenico Vistocco
 #echo "Domenico.Vistocco"
