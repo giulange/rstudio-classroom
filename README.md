@@ -10,6 +10,20 @@ The web app is available to students at `http://rstudio-classroom.ddns.net/`
 It is based on the docker container rstudio-didattica using a docker port 8686 which is redirected to the public url above.
 
 ## Research
+### workflow
+
+Using the docker hub stored image rstudio_research:
+
+ 1. fetch.sh
+ 2. rerun_research.sh
+
+From scratch:
+
+ 1. build_from_scratch_and_save.sh --> build.sh --> Dockerfile
+ 2. rerun_research.sh
+ 3. install_dep.sh
+
+
 ### Image build
 #### DockerHub
 
