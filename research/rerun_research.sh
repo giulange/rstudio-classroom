@@ -29,7 +29,7 @@ docker run -d --name $CONTAINER_NAME \
 		   -v /media:/media \
 		   -v /home/$USERNAME:/home/$USERNAME \
 		   -e USER=$USERNAME \
-		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=eRtf321-a2 \
+		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=antonietta \
 		   -p 8787:8787 \
 		   $IMAGE
 
