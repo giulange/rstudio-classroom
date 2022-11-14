@@ -1,5 +1,16 @@
 # rstudio-server
 
+## host / container user
+https://faun.pub/set-current-host-user-for-docker-container-4e521cef9ffc
+https://www.cyberciti.biz/faq/linux-change-user-group-uid-gid-for-all-owned-files/
+
+I found that it was easy to change the id of the container to fit the host one.
+I have to execute in container
+
+```
+usermod -u 1002 giuliano
+```
+
 ## Deafult credentials
 usr: rstudio 
 pswd: eRtf321-a2 [DEFAULT] 
@@ -15,14 +26,18 @@ It is based on the docker container rstudio-didattica using a docker port 8686 w
 Using the docker hub stored image rstudio_research:
 
  1. fetch.sh
- 2. rerun_research.sh
+ 2. [build_uid.sh]
+ 3. rerun_research.sh
 
 From scratch:
 
  1. build_from_scratch_and_save.sh --> build.sh --> Dockerfile
- 2. rerun_research.sh
- 3. install_dep.sh
+ 2. [build_uid.sh]
+ 3. rerun_research.sh
+ 4. install_dep.sh
 
+To change the user and group IDs:
+ 1. build_uid.sh
 
 ### Image build
 #### DockerHub

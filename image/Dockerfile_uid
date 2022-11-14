@@ -1,0 +1,6 @@
+FROM rstudio_research
+
+# set here user id...
+RUN usermod -u 1002 giuliano
+# ...and user group
+RUN groupmod -g 1002 giuliano
