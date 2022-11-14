@@ -1,17 +1,30 @@
 #!/bin/bash
-#
-# NOTES
+# DESCRIPTION
 #   This script runs a docker container dedicated to research, 
-#   having access to both media & my home.
+#   having access to both media & home folders of my user on 
+#		host machine.
+#
+# REFERENCES
+#   - 
+#
+# ISSUES
+#  ...
+#
+# CALL
+#  ./rerun_research.sh <CONTAINER_NAME>
+#  ./rerun_research.sh rstudio_research
 
+# === ARGS ===
 defval="rstudio_research"
 CONTAINER_NAME=${1:-$defval}
 
+# === PARAMETERS ===
 #IMAGE=rocker/tidyverse # original image name
-IMAGE=rstudio_research
+IMAGE=rstudio_research:latest
 UID=1002
 USERNAME=giuliano
 
+# === START ===
 conid=$(docker ps -aqf "name=^${CONTAINER_NAME}$")
 if [ "$conid" != "" ]; then
   echo "  Container $CONTAINER_NAME exists"
@@ -24,6 +37,16 @@ if [ "$conid" != "" ]; then
 fi
 
 # -- granatellum-gpu:
+echo "docker run -d --name $CONTAINER_NAME \
+		   --restart always \
+		   -v /media:/media \
+		   -v /home/$USERNAME/tmp:/home/$USERNAME \
+		   -e USER=$USERNAME \
+		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=antonietta \
+		   -p 8787:8787 \
+		   $IMAGE"
+#export UID=$(id -u)
+#export GID=$(id -g)
 docker run -d --name $CONTAINER_NAME \
 		   --restart always \
 		   -v /media:/media \
@@ -32,6 +55,6 @@ docker run -d --name $CONTAINER_NAME \
 		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=antonietta \
 		   -p 8787:8787 \
 		   $IMAGE
-
+#		   --user $UID:$GID \
 # -- VM-docker-prod:
 #docker run -d --name rstudio-docente -v /media:/media -v /home/giuliano:/home/giuliano -e USER=giuliano -e USERID=1001 -e GROUPID=1001 -e PASSWORD=eRtf321-a2 -p 8787:8787 rocker/tidyverse

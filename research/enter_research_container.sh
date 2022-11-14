@@ -1,4 +1,3 @@
 #!/bin/bash
 
-docker exec -it -u root rstudio_research /bin/bash
-
+docker exec -it -u giuliano rstudio_research /bin/bash

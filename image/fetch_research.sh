@@ -9,7 +9,7 @@
 #  ...
 #
 # CALL
-#  ./fetch.sh
+#  ./fetch_research.sh
 
 IMAGE_HUB=giulange/pedometrics:rstudio-research-run1
 IMAGE_EXE=rstudio_research
