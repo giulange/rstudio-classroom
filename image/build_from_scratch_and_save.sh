@@ -12,7 +12,8 @@
 
 # === START ===
 IMAGE=rocker/tidyverse:latest
-PATH_OUT_IMAGES=""
+SAV_IMAGE=rocker_tidyverse_latest
+PATH_OUT_IMAGES="~/docker-persistencies/rstudio_didattica"
 
 echo "Recreating the $IMAGE RStudio image..."
 
@@ -31,8 +32,7 @@ echo ""
 
 # 02. saave built image for future reference
 echo "02. saving image ${IMAGE}..."
-echo "docker save ${IMAGE} | gzip > $PATH_OUT_IMAGES/${IMAGE}_$(date '+%Y-%m-%dT%H%M').tar.gz"
-docker save ${IMAGE} | gzip > $PATH_OUT_IMAGES/${IMAGE}_$(date '+%Y-%m-%dT%H%M').tar.gz
+echo "docker save ${IMAGE} | gzip > $PATH_OUT_IMAGES/${SAV_IMAGE}_$(date '+%Y-%m-%dT%H%M').tar.gz"
+docker save ${IMAGE} | gzip > $PATH_OUT_IMAGES/${SAV_IMAGE}_$(date '+%Y-%m-%dT%H%M').tar.gz
 echo "...done!"
 echo ""
-
