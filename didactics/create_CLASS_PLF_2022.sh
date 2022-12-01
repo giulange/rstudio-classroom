@@ -3,7 +3,7 @@
 # Please, consider to configure add_DOCENTE_2_rstudio.sh before to run THIS script.
 
 
-container="rstudio_didattica"
+container="rstudio_didattica_plf"
 PSWD="plf2022"
 
 # ==== DOCENTI ====
