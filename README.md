@@ -33,11 +33,11 @@ To change the user and group IDs:
  1. build_uid.sh
 
 ## Research
-### workflow
+### workflows to start a new instance (in VM or host)
 
 Using the docker hub stored image rstudio_research:
 
- 1. fetch.sh
+ 1. fetch_research.sh
  2. [build_uid.sh]
  3. rerun_research.sh
 
