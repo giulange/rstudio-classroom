@@ -31,6 +31,7 @@ IMAGE_NAME=${2:-$DEF_IMAGE_NAME}
 
 # ========= START =============
 CONTAINER_NAME=rstudio_didattica_${ENV}
+PERSISTENCY_PATH=~/docker-persistencies/rstudio_didattica/home-students-$ENV
 
 # check number of input arguments:
 if [ $# -eq 0 ]
@@ -70,12 +71,21 @@ sh build.sh "" "$IMAGE_NAME"
 echo "  ...done"
 echo ""
 
+# RUN
 cd $CURRENT_DIR
+
+# create home dir for students if not existent yet:
+if [ -d "$PERSISTENCY_PATH" ];
+then
+  echo "  Home dir already exists:"
+  echo "    > $PERSISTENCY_PATH"
+else
+  echo "  Creating home dir:"
+  echo "    > $PERSISTENCY_PATH"
+  mkdir $PERSISTENCY_PATH
+fi
+echo ""
 
 # 02. run container
 ./rerun_didactics.sh $ENV $IMAGE_NAME
-
-
-
-
 

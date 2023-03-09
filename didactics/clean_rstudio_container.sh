@@ -1,14 +1,45 @@
 #!/bin/bash
 #
 # DESCRIPTION
-#   This script enables to delete all users in container to avoid delete the container e recreate it.
-#   It can be useful if I need to keep students from more classes / years.
+#   This script enables to delete all users in container 
+#   to avoid delete the container and recreate it.
+#   It can be useful if I need to keep students 
+#   from more classes / years.
+#
+# INPUTS
+#  $1  :  ENV = { gevs | plf | mgs }
+#           > gevs : Geografia e Valutazion del Suolo
+#           > plf  : Precision Livestock Farming
+#           > mgs  : master in GIS science UNIPD
+#
+# CALL
+#  ./clean_rstudio_container.sh [ <ENV> ]
+#  ./clean_rstudio_container.sh plf
 
+# ========= PARAMETERS =============
 DRYRUN=0
+PERSISTENCY_PATH=~/docker-persistencies/rstudio_didattica
+home_teachers=${PERSISTENCY_PATH}/home-teachers
 
-LIVEHOME=/home/giuliano/work/docker-didactics/home-students
-BAKHOME=/home/giuliano/work/docker-didactics/home-students-bak
-CONTAINER=rstudio_didattica
+# ========= ARGS =============
+ENV=$1
+
+# ========= ARGS CHECK =============
+if [ "$ENV" == "gevs" ]; then
+  echo "GeVS"
+elif [ "$ENV" == "plf" ]; then
+  echo "PLF"
+elif [ "$ENV" == "mgs" ]; then
+  echo "MGS"
+else
+  echo "Error: argument ENV=$ENV not recognized!"
+  exit 1
+fi
+
+# ========= START =============
+LIVEHOME=${PERSISTENCY_PATH}/home-students-$ENV/
+BAKHOME=${PERSISTENCY_PATH}/home-students-bak
+CONTAINER=rstudio_didattica_$ENV
 EXCEPTIONS="Giuliano.Langella"
 
 # 00. list of students to remove
