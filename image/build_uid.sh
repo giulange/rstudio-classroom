@@ -28,8 +28,8 @@ IMAGE=${2:-$defval}
 #IMAGE=rocker/tidyverse:latest
 
 # === PARAMETERS ===
-UID=1002
-GID=1002
+#UID=1002
+#GID=1002
 
 # === START ===
 # Update the docker image:
