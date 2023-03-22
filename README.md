@@ -15,6 +15,13 @@ usermod -u 1002 giuliano
 usr: rstudio 
 pswd: eRtf321-a2 [DEFAULT] 
 
+## Notes about new install features
+
+### OpenStreetMap
+See this instructions which worked fine in MGS RStudio docker container:
+https://www.r-bloggers.com/2018/02/installing-rjava-on-ubuntu/
+
+
 ## Didactics
 ### Web App for Students
 The web app is available to students at `http://rstudio-classroom.ddns.net/`
