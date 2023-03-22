@@ -4,12 +4,12 @@
 
 
 container="rstudio_didattica_gevs"
-PSWD="gevs2022"
+PSWD="gevs2023"
 
 # ==== DOCENTI ====
 # Giuliano Langella
-echo "Giuliano.Langella"
-./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container 3002
+#echo "Giuliano.Langella"
+#./add_USER_2_rstudio.sh Giuliano.Langella antonietta $container 3002
 # ==== DOCENTI ====
 
 
@@ -18,6 +18,9 @@ declare -a Students=(
 Riccardo.Fornaro
 GiuseppePio.Alaia
 Veronica.Basile
+Matteo.Perrone
+Antonio.Iorio
+Venanzio Ambrosino
 Roberta.Ascolese
 Flavia.Chianese
 )

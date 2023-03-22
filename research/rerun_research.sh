@@ -23,6 +23,7 @@ CONTAINER_NAME=${1:-$defval}
 IMAGE=rstudio_research:latest
 UID=1002
 USERNAME=giuliano
+PSWD=antonietta
 
 # === START ===
 conid=$(docker ps -aqf "name=^${CONTAINER_NAME}$")
@@ -42,19 +43,26 @@ echo "docker run -d --name $CONTAINER_NAME \
 		   -v /media:/media \
 		   -v /home/$USERNAME/tmp:/home/$USERNAME \
 		   -e USER=$USERNAME \
-		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=antonietta \
+		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=$PSWD \
 		   -p 8787:8787 \
 		   $IMAGE"
 #export UID=$(id -u)
 #export GID=$(id -g)
-docker run -d --name $CONTAINER_NAME \
-		   --restart always \
-		   -v /media:/media \
-		   -v /home/$USERNAME:/home/$USERNAME \
-		   -e USER=$USERNAME \
-		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=antonietta \
-		   -p 8787:8787 \
-		   $IMAGE
+docker run -d \
+	--name $CONTAINER_NAME \
+	--restart always \
+	-v /media:/media \
+	-v /home/$USERNAME:/home/$USERNAME \
+	-e USER=$USERNAME \
+	-e USERID=$UID -e GROUPID=$UID -e PASSWORD=$PSWD \
+	-p 8787:8787 \
+	$IMAGE
 #		   --user $UID:$GID \
 # -- VM-docker-prod:
 #docker run -d --name rstudio-docente -v /media:/media -v /home/giuliano:/home/giuliano -e USER=giuliano -e USERID=1001 -e GROUPID=1001 -e PASSWORD=eRtf321-a2 -p 8787:8787 rocker/tidyverse
+
+echo "user  :  $USERNAME"
+echo "pswd  :  $PSWD"
+echo ""
+echo "...done!"
+
