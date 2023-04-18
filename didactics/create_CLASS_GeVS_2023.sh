@@ -20,7 +20,7 @@ GiuseppePio.Alaia
 Veronica.Basile
 Matteo.Perrone
 Antonio.Iorio
-Venanzio Ambrosino
+Venanzio.Ambrosino
 Roberta.Ascolese
 Flavia.Chianese
 )
