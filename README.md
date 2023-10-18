@@ -15,23 +15,6 @@ usermod -u 1002 giuliano
 usr: rstudio 
 pswd: eRtf321-a2 [DEFAULT] 
 
-## Didactics
-### Web App for Students
-The web app is available to students at `http://rstudio-classroom.ddns.net/`
-It is based on the docker container rstudio-didattica using a docker port 8686 which is redirected to the public url above.
-
-### workflow
-
-From scratch:
-
- 1. build_from_scratch_and_save.sh --> build.sh --> Dockerfile
- 2. [build_uid.sh]
- 3. rerun_didactics.sh
- 4. install_dep.sh
-
-To change the user and group IDs:
- 1. build_uid.sh
-
 ## Research
 ### workflows to start a new instance (in VM or host)
 

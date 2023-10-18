@@ -26,26 +26,58 @@ ENV=$1
 
 # ========= ARGS CHECK =============
 if [ "$ENV" == "gevs" ]; then
-  echo "GeVS"
+  echo "container  : GeVS"
 elif [ "$ENV" == "plf" ]; then
-  echo "PLF"
+  echo "container  : PLF"
 elif [ "$ENV" == "mgs" ]; then
-  echo "MGS"
+  echo "container  : MGS"
 else
   echo "Error: argument ENV=$ENV not recognized!"
   exit 1
 fi
+echo ""
 
 # ========= START =============
 LIVEHOME=${PERSISTENCY_PATH}/home-students-$ENV/
 BAKHOME=${PERSISTENCY_PATH}/home-students-bak
 CONTAINER=rstudio_didattica_$ENV
-EXCEPTIONS="Giuliano.Langella"
+declare -a EXCEPTIONS=("Giuliano.Langella" "rstudio")
 
 # 00. list of students to remove
 #declare -a Students=( "Alessandra.Apostolico" "Giuseppina.Difilippo" "Sara.Esposito" "Federico.Iannuzzi" "Valeria.Iervolino" "Vincenzo.Landolfi" "Marica.Marchese" "Gabriella.Pontillo" "Martina.Salzano" "Roberto.Tieri" "Marco.Vitillo" "Ali" "Osman.Mohamud" "Fabiana.Soprano" "Mariarosa.Astarita" "Michela.Ruberto" "Valeria.Iervolino2" )
 declare -a Students=$(ls -d ${LIVEHOME}/*)
 #declare -a Students=( "/home/giuliano/work/docker-didactics/home-students/Giuliano.Langella" )
+
+for Student in ${Students[@]}
+ do
+  excFound=false
+  if [ -d "$Student" ]; then
+    fname=$(basename $Student)
+    #echo $fname
+    for exception in ${EXCEPTIONS[@]} 
+     do
+      if [[ "$fname" == "$exception" ]]; then
+        excFound=true
+        continue
+      fi
+    done
+    if $excFound ; then
+      echo "Skip       : $fname"
+    else
+      echo "Remove     : $fname"
+    fi
+  fi
+done
+
+echo ""
+read -p "Removing useless users... Are you sure? " -n 1 -r
+echo ""
+echo ""
+if [[ $REPLY =~ ^[Nn]$ ]]
+then
+    echo "...exiting!"
+    exit
+fi
 
 # 01. stop docker container
 echo "Stopping docker container $CONTAINER..."
@@ -56,28 +88,39 @@ fi
 # 02. backup student dir
 for Student in ${Students[@]} 
  do
+  excFound=false
   #if [ -d "$LIVEHOME/$Student" ]; then
   if [ -d "$Student" ]; then
     fname=$(basename $Student)
     #echo $fname
-    if [[ "$fname" == "$EXCEPTIONS" ]]; then
-      echo "User $fname skipped..."
+
+    for exception in ${EXCEPTIONS[@]} 
+     do
+      if [[ "$fname" == "$exception" ]]; then
+        echo "  User $fname skipped..."
+        excFound=true
+        break
+      fi
+    done
+    if $excFound ; then
       continue
     fi
+
     #echo "sudo mv $LIVEHOME/$Student $BAKHOME/"
-    echo "sudo mv $Student $BAKHOME/"
+    echo "  sudo mv -f $Student $BAKHOME/"
     if [ $DRYRUN -eq 0 ]; then
-      sudo mv $Student $BAKHOME/
+      sudo rm -rf $BAKHOME/$fname
+      sudo mv -f $Student $BAKHOME/
       #sudo mv $LIVEHOME/$Student $BAKHOME/
     fi
   else
     #echo "NOT FOUND: $LIVEHOME/$Student"
-    echo "NOT FOUND: $Student"
+    echo "  NOT FOUND: $Student"
   fi
 done  
 
 # 03. restart docker
-echo "Starting docker container $CONTAINER..."
+echo "  Starting docker container $CONTAINER..."
 if [ $DRYRUN -eq 0 ]; then
   docker start $CONTAINER
 fi
@@ -88,10 +131,10 @@ for Student in ${Students[@]}
   if [ -d "$Student" ]; then
     fname=$(basename $Student)
     if [[ "$fname" == "$EXCEPTIONS" ]]; then
-      echo "User $fname skipped..."
+      echo "  User $fname skipped..."
       continue
     fi
-    echo "docker exec -it $CONTAINER sh -c 'userdel -r $fname'"
+    echo "  docker exec -it $CONTAINER sh -c 'userdel -r $fname'"
     if [ $DRYRUN -eq 0 ]; then
       docker exec -it $CONTAINER sh -c "userdel -r $Student"
     fi
