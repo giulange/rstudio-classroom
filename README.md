@@ -75,7 +75,9 @@ docker image rm giulange/pedometrics:rstudio-research-run1
  01. Documentation
  goto https://docs.rstudio.com/ide/server-pro/index.html
 
- 02. In case of issues with a Student not able to access the session, 
+ 02. In case of the issue "Unable to connect to service (1)" run `docker logs` and check if there's a problem writing the PID file, such as `var/run/rstudio-server/rstudio-rsession/giuliano-d.pid`. In that case, delete the PID file manually and it works.
+
+ 03. In case of issues with a Student not able to access the session, 
  follow instructions given [here](https://community.rstudio.com/t/rstudio-server-error-occurred-during-transmission/84258),
  that is:
 
