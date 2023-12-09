@@ -1,0 +1,14 @@
+{
+  "name": "translation-app",
+  "version": "1.0.0",
+  "main": "translate.js",
+  "scripts": {
+    "start": "node translate.js"
+  },
+  "dependencies": {
+    "@vitalets/google-translate-api": "^7.0.0",
+    "fs": "0.0.1-security"
+    // Altre dipendenze necessarie
+  }
+}
+

@@ -21,6 +21,23 @@ pswd: eRtf321-a2 [DEFAULT]
 See this instructions which worked fine in MGS RStudio docker container:
 https://www.r-bloggers.com/2018/02/installing-rjava-on-ubuntu/
 
+## Books
+### Web book crafted for the studetns of my course
+...
+
+### workflow
+
+From scratch:
+
+ 1. build_bookcraft.sh --> 
+    A) build.sh --> Dockerfile
+    B) Dockerfile_bookcraft
+ 2. rerun_bookcraft.sh
+
+?To change the user and group IDs:
+ 1. ?build_uid.sh
+
+
 
 ## Didactics
 ### Web App for Students

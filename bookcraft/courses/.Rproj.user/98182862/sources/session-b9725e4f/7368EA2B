@@ -1,0 +1,27 @@
+{
+    "id": "7368EA2B",
+    "path": "~/courses/book/en/index.Rmd",
+    "project_path": "book/en/index.Rmd",
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1702038358743.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "13,19",
+        "scrollLine": "0",
+        "working_dir": "project"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1702041503,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1702041503622,
+    "read_only": false,
+    "read_only_alternatives": []
+}
