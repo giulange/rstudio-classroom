@@ -1,0 +1,11 @@
+# Preface
+Put here motivation for the notes.
+
+## biblio
+
+[@Castrignano17_sensors]
+
+## equation
+$\gamma=\ sum\left(\frac{x}{a}\right)$
+
+

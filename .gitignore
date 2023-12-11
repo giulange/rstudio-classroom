@@ -9,3 +9,15 @@ bookcraft/.config/
 bookcraft/.local/
 
 bookcraft/.TinyTeX/
+
+bookcraft/.cache/
+
+bookcraft/.bash_history
+
+bookcraft/rstudio/.config/
+
+bookcraft/.sudo_as_admin_successful
+
+bookcraft/courses/.Rproj.user/
+
+bookcraft/courses/book/.Rproj.user/
