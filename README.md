@@ -59,6 +59,7 @@ To change the user and group IDs:
  1. build_uid.sh
 
 ### Image build
+
 #### DockerHub
 
 See fetch script for the most up-to-date version:
@@ -109,6 +110,14 @@ docker image rm giulange/pedometrics:rstudio-research-run1
    3. mv the .rstudio folder to .rstudio_old
    4. problem fixed
 
+### Other issues
+
+#### unable to login in rstudio research
+After the execution of `/home/giuliano/git/rstudio-classroom/research/rerun_research.sh rstudio_research`.
+I was unable to login in the webapp.
+In order to fix it, I had to remove the /var/run/rstudio-server/rstudio-rsession/giuliano-d.pid file which have uid/gid 3002.
+The user giuliano (id=1000) inside the container was unable to write/remove this pid.
+This issue raise when I run the `rerun_research.sh` script.
 
 ### Some sparse notes
 Get the list of students with active sessions

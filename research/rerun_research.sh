@@ -24,6 +24,7 @@ IMAGE=rstudio_research:latest
 UID=1000
 USERNAME=giuliano
 PSWD=antonietta
+PORT_SHINY=5575
 
 # === START ===
 conid=$(docker ps -aqf "name=^${CONTAINER_NAME}$")
@@ -45,6 +46,7 @@ echo "docker run -d --name $CONTAINER_NAME \
 		   -e USER=$USERNAME \
 		   -e USERID=$UID -e GROUPID=$UID -e PASSWORD=$PSWD \
 		   -p 8787:8787 \
+		   -p $PORT_SHINY:$PORT_SHINY \
 		   $IMAGE"
 #export UID=$(id -u)
 #export GID=$(id -g)
@@ -56,6 +58,7 @@ docker run -d \
 	-e USER=$USERNAME \
 	-e USERID=$UID -e GROUPID=$UID -e PASSWORD=$PSWD \
 	-p 8787:8787 \
+	-p $PORT_SHINY:$PORT_SHINY \
 	$IMAGE
 #		   --user $UID:$GID \
 # -- VM-docker-prod:
