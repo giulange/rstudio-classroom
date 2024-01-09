@@ -1,5 +1,7 @@
 # rstudio-server
 
+RStudio Server [documentation](https://s3.amazonaws.com/rstudio-server/rstudio-server-pro-0.98.507-admin-guide.pdf).
+
 ## host / container user
 https://faun.pub/set-current-host-user-for-docker-container-4e521cef9ffc
 https://www.cyberciti.biz/faq/linux-change-user-group-uid-gid-for-all-owned-files/

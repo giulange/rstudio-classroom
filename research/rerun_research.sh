@@ -24,7 +24,7 @@ IMAGE=rstudio_research:latest
 UID=1000
 USERNAME=giuliano
 PSWD=antonietta
-PORT_SHINY=5575
+PORT_SHINY=3838 #5575
 
 # === START ===
 conid=$(docker ps -aqf "name=^${CONTAINER_NAME}$")
