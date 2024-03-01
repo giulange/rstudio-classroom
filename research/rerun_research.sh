@@ -20,7 +20,8 @@ CONTAINER_NAME=${1:-$defval}
 
 # === PARAMETERS ===
 #IMAGE=rocker/tidyverse # original image name
-IMAGE=rstudio_research:latest
+#IMAGE=rstudio_research:latest
+IMAGE="rocker/tidyverse:latest"
 UID=1000
 USERNAME=giuliano
 PSWD=antonietta
