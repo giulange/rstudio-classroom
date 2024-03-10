@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# PARAMETERS
+DOCKERFILE=Dockerfile_phpapache
+
 # INPUT ARGUMENTS
 defval="php_apache"
 image=${1:-$defval}
@@ -14,8 +17,8 @@ docker rmi $image
 
 #build the new image:
 echo "Building $image image..."
-echo "  >> docker build $NO_CACHE -t $image -f php/Dockerfile ."
-docker build $NO_CACHE -t $image -f php/Dockerfile .
+echo "  >> docker build $NO_CACHE -t $image -f $DOCKERFILE ."
+docker build $NO_CACHE -t $image -f $DOCKERFILE .
 
 # remove the old image
 #docker rmi ${image}_old

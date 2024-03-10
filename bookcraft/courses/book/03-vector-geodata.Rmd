@@ -8,7 +8,8 @@ sp package : ...
 
 ### Install libraries
 The following commands can be skipped in the RStudio instance provided by the teacher during the course.
-```{r eval=FALSE}
+
+```{r install_libs, eval=FALSE, echo=FALSE}
 install.packages("sf")
 install.packages("raster")
 install.packages("spData")
@@ -19,10 +20,11 @@ install.packages("osmdata")
 #remotes::install_github("ropensci/geojsonio")
 #install.packages("geojsonio", dependencies = TRUE)
 ```
+
 **Note:** the installation of geojsonio can be sometimes tricky.
 
 ### Load libraries
-```{r results='hide'}
+```{r load_libs, results='hide'}
 library(sf)          # classes and functions for vector data
 library(raster)      # classes and functions for raster data
 library(spData)      # load geographic data
@@ -375,12 +377,13 @@ In this example we read data from files which are not designed to implement any 
 The temperature and precipitation measurements carried out by standard agrometeorological ground stations are extracted from Excel files (Excel format is not the best interoperable practice):
 
 Both the `measurements` and the `geolocalization` tables are used in the reading / import below:
-```{r, echo=2:4}
+```{r, echo=2:5}
 setwd('../../datasets/interoperable')
 require(readxl)
 Tmax   <- read_excel("Tmax.xlsx", sheet = "measurements", na = "NA")
 Rain   <- read_excel("Rainfall.xlsx", sheet = "measurements", na = "NA")
 lonlat <- read_excel("Tmax.xlsx", sheet = "geolocalization", na = "NA")
+setwd('/home/giuliano/courses/book')
 ```
 
 ```{r tab-tmax, tidy=FALSE, echo=FALSE}
@@ -454,6 +457,7 @@ knitr::kable(
   head(t_day, 10), caption = 'A preview of the Air Temperature data frame',
   booktabs = TRUE
 )
+setwd('/home/giuliano/courses/book')
 ```
 
 ```{r}
@@ -481,7 +485,9 @@ knitr::kable(
   head(imp_dsm, 5), caption = 'A preview of the Improsta farm digital soil map',
   booktabs = TRUE
 )
+setwd('/home/giuliano/courses/book')
 ```
+
 ```{r}
 plot(imp_dsm["SIGLA_UC"], axes=TRUE, border="grey")
 ```

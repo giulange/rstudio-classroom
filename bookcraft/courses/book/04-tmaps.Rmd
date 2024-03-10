@@ -18,6 +18,7 @@ Create Air temperature measurements simple feature:
 setwd('../../datasets/interoperable')
 t_day <- read_csv("AirTemperature_day.csv")
 t_day_sf <- st_as_sf(t_day,coords = c("lon","lat"), crs=4326)
+setwd('/home/giuliano/courses/book')
 ```
 
 Which variables are available?

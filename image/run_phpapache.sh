@@ -22,6 +22,7 @@ DEF_CONTAINER_NAME=php_apache-booklets
 DEF_NET_NAME=bridge
 # On VM RStudio Didactics on Granatellum proxmox:
 WEBAPPS=/home/giuliano/docker-persistencies/php_apache/html
+BOOK1=/home/giuliano/git/rstudio-classroom/bookcraft/courses/book/_book
 
 # ========= ARGS =============
 IMAGE_NAME=${1:-$DEF_IMAGE_NAME}
@@ -49,7 +50,8 @@ echo "  Start container $CONTAINER_NAME running on top of $IMAGE_NAME image"
 echo "      > network      : $DEF_NET_NAME"
 echo "      > port http    : $PORT_WEB"
 echo "      > port https   : $PORT_SSL"
-echo "      > persistency  : $WEBAPPS"
+echo "      > main HTML    : $WEBAPPS"
+echo "      > Lectures     : $BOOK1"
 echo ""
 docker run \
 -d \
@@ -57,6 +59,7 @@ docker run \
 --restart always \
 --network $NET_NAME \
 -v $WEBAPPS:/var/www/html \
+-v $BOOK1:/var/www/html/lectures \
 -p $PORT_WEB:80 \
 -p $PORT_SSL:443 \
 -t \
