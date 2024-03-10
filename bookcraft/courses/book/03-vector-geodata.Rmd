@@ -43,7 +43,6 @@ require(osmdata)     # Open Street Map
 knitr::include_graphics("/home/giuliano/artwork/sf-classes.png")
 ```
 
-<font size=3>
 Simple features is an open standard developed and endorsed by the <a href="https://www.opengeospatial.org">Open Geospatial Consortium (OGC)</a>, a not-for-profit organization.<br>
 Simple Features (<b>SF</b>) is a hierarchical data model that represents a wide range of geometry types.<br>
 Of 17 geometry types supported by the specification, only 7 are used in the vast majority of geographic research (see Figure below); these core geometry types are fully supported by the R package <i>sf</i>.<br>
@@ -363,21 +362,156 @@ In the above R object we have all the information, both data and metadata, requi
 The vector data model created for the simple example above can be managed in R but also exported to be managed in whatever software capable of GIS funcionalities.
 
 ### Creation of a Simple Feature
+A simple feature can be created:
 
-#### From scratch
+ - from scratch, using synthetic/real-world data
+ - from a vector data model stored in a local/remote file
+
+#### From scratch | synthetic data
 (reference the example above using P1 and P2, otherwise create a new example -> forest or livestock)
 
+#### From scratch | real-world data {#scratch-realworld}
+In this example we read data from files which are not designed to implement any vector data model.<br>
+The temperature and precipitation measurements carried out by standard agrometeorological ground stations are extracted from Excel files (Excel format is not the best interoperable practice):
 
-#### Existent vector geodata: examples using Climatic Ground Stations
-(I could add one more examples using my smart Agrometeorological Weather Station).
-(I have to properly use my dataset in the document, for instance I can list the directory limiting to the objects I need + I could provide a link in the document to download the file used (interesting for the public not for the students))
+Both the `measurements` and the `geolocalization` tables are used in the reading / import below:
+```{r, echo=2:4}
+setwd('../../datasets/interoperable')
+require(readxl)
+Tmax   <- read_excel("Tmax.xlsx", sheet = "measurements", na = "NA")
+Rain   <- read_excel("Rainfall.xlsx", sheet = "measurements", na = "NA")
+lonlat <- read_excel("Tmax.xlsx", sheet = "geolocalization", na = "NA")
+```
 
-##### Standard Agrometeorological Ground Stations
-...we will use the temperature and precipitation measured at ground weather stations...
+```{r tab-tmax, tidy=FALSE, echo=FALSE}
+knitr::kable(
+  head(Tmax, 5), caption = 'Here is a preview of the daily maximum Air Temperatura measurements.',
+  booktabs = TRUE
+)
+```
+
+```{r tab-rain, tidy=FALSE, echo=FALSE}
+knitr::kable(
+  head(Rain, 5), caption = 'Here is a preview of the daily cumulative Rainfall measurements.',
+  booktabs = TRUE
+)
+```
+
+```{r tab-lonlat, tidy=FALSE, echo=FALSE}
+knitr::kable(
+  lonlat, caption = 'The coordinates in the geodetic reference system WGS84 (EPSG:4326).',
+  booktabs = TRUE
+)
+```
+
+Extract coordinates, temperature and rainfall measurements for `MODENAURB` station on `2007-01-01`:
+```{r}
+name <- lonlat$Station[1]
+t1   <- Tmax$MODENAURB[1]
+r1   <- Rain$MODENAURB[1]
+d1   <- Tmax$DATE[1]
+lon  <- lonlat$Longitude[1]
+lat  <- lonlat$Latitude[1]
+print( c(name, lon,lat,t1,r1) )
+```
+
+Create a Simple Feature using the values extracted above:
+```{r}
+point   = st_point(c(lon, lat))        # 1. sfg object
+class(point)                           #    see that the class is a sfg
+geom    = st_sfc(point, crs = 4326)    # 2. sfc object
+class(geom)                            #    see that the class is a sfc
+attrib  = data.frame(                  # 3. attributes
+   name = name,                        #    Station name, "MODENAURB"
+   date = as.Date(d1),                 #    Convert the date-time in date, on '2007-01-01'
+   temperature = t1,                   #    Air Temperature for "MODENAURB" on '2007-01-01'
+   rainfall = r1                       #    Rainfall for "MODENAURB" on '2007-01-01'
+)
+# Simple Feature (Collection):
+SF = st_sf(attrib, geometry = geom)    # 3. sf object
+class(SF)                              #    see that the class is a sf
+print(SF)                              #    see both metadata and data in the simple feature
+```
+
+In the example provided above, only one record was created but it is possible to add more records (or features) belonging to both other stations and other dates.
+
+The list of variable / attributes / fields (in this handbook the term variable is prefered):
+```{r}
+names(SF)
+```
+
+Print the geometry only:
+```{r}
+print(SF$geometry)
+```
+
+#### Interchange format | local file
+Load the air temperature measurements carried out by the standard agrometeorological ground stations (IoT context):<br>
+```{r tab-tday, echo=2, tidy=FALSE}
+setwd('../../datasets/interoperable')
+t_day <- read.csv("AirTemperature_day.csv")
+knitr::kable(
+  head(t_day, 10), caption = 'A preview of the Air Temperature data frame',
+  booktabs = TRUE
+)
+```
+
+```{r}
+class(t_day)
+```
+
+Convert a data frame into a simple feature (see the new field `geometry` created by the function `st_as_sf()`):
+```{r echo=1:2, tidy=FALSE}
+require(sf)
+t_day_sf <- st_as_sf(t_day,coords = c("lon","lat"), crs=4326)
+knitr::kable(
+  head(t_day_sf, 10), caption = 'A preview of the Air Temperature simple feature',
+  booktabs = TRUE
+)
+```
+
+#### Existing Vector Data Model | local file
+Import in R the Improsta Farm Digital Soil Map.
+The `st_read()` function reads a vector data model written in Shapefile format:
+```{r tab-dsm-improsta, echo=2:3, tidy=FALSE}
+setwd('../../datasets/vector')
+require(sf)
+imp_dsm <- st_read("DigitalSoilMap_Improsta.shp")
+knitr::kable(
+  head(imp_dsm, 5), caption = 'A preview of the Improsta farm digital soil map',
+  booktabs = TRUE
+)
+```
+```{r}
+plot(imp_dsm["SIGLA_UC"], axes=TRUE, border="grey")
+```
+
+#### Existing Vector Data Model | remote data source
+The `getbb()` function can search in OpenStreetMap using a toponym (e.g. _Emilia Romagna_) and can return a simple feature as output (`format_out=sf_polygon`):
+```{r}
+require(osmdata)
+ER  = osmdata::getbb("Emilia Romagna",format_out="sf_polygon")
+names(ER)
+ER <- ER$multipolygon
+```
+
+```{r}
+plot(ER$geometry,reset=F)
+plot(SF$geometry,add=T,pch=16,col="red")
+axis(1, labels=TRUE)
+axis(2, labels=TRUE)
+text(st_coordinates(SF),"P1",pos=2)
+title(xlab="Longitude [degree]",ylab="Latitude [degree]")
+```
+
+### Export of a Simple Feature
+In [section creating data from scratch](#scratch-realworld) we created a simple feature from scratch. Let's export / save / write it to a file using a standard vector data model/driver (e.g. geojson format):
+
+```{r, eval=FALSE}
+st_write(SF,"my_first_simple_feature.geojson")
+```
+Note that the driver used to write data on HDD depends on the file extension provided: in the example above, it was used `.geojson` but any other extension can be used.
 
 
-
-
-##### Smart Agrometeorological Groud Stations (IoT)
 
 

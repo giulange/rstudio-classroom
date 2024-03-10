@@ -1,0 +1,36 @@
+# Geospatial Data Visualization
+
+See :: https://r-spatial.github.io/sf/articles/sf5.html
+
+## Basic plot function
+
+## Advanced ggplot2 library
+
+## Advanced tmaps library
+
+```{r, echo=FALSE}
+require(sf)
+require(readr)
+```
+
+Create Air temperature measurements simple feature:
+```{r, echo=2:3}
+setwd('../../datasets/interoperable')
+t_day <- read_csv("AirTemperature_day.csv")
+t_day_sf <- st_as_sf(t_day,coords = c("lon","lat"), crs=4326)
+```
+
+Which variables are available?
+```{r}
+names(t_day_sf)
+```
+
+Let's create a map using the tmap library:
+```{r}
+require(tmap)
+tmap::tmap_mode("plot")
+tm_shape(t_day_sf) + 
+  tm_bubbles(size="max",col="elev")
+```
+Note that you can create interactive maps using the `"view"` mode (in this document interactive maps don't work).
+In the book [GEOG3915 GeoComputation and Spatial Analysis practicals](https://bookdown.org/lexcomber/GEOG3195/data-and-spatial-data-in-r.html#using-r-as-a-gis) it is created without problems.
