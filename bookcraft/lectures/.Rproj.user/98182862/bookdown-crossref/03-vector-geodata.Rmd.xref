@@ -1,0 +1,34 @@
+h1:vector-data-model Vector Data Model
+h2:links LINKS
+h2:packages-used Packages used
+h3:install-libraries Install libraries
+h3:load-libraries Load libraries
+h2:an-introduction-to-simple-features An introduction to simple features
+h3:why-simple-features Why simple features?
+h2:simple-feature-geometry-sfg Simple feature geometry (sfg)
+h3:point POINT
+h3:linestring LINESTRING
+h3:polygon POLYGON
+h3:multipoint MULTIPOINT
+h3:multilinestring MULTILINESTRING
+h3:multipolygon MULTIPOLYGON
+h3:geometrycollection GEOMETRYCOLLECTION
+h2:simple-features-column-sfc Simple features column (sfc)
+h3:from-pure-geometry-of-distinct-points-to-a-set-of-organized-records-sfg From pure geometry of distinct POINTs to a set of organized records (SFG)
+fig:sfc-polygons-forest-types Two forest patches managed using a SFC.
+h3:crs-coordinate-reference-system CRS (Coordinate Reference System)
+h2:the-sf-class The SF class
+h3:creation-of-a-simple-feature Creation of a Simple Feature
+h4:from-scratch-synthetic-data From scratch | synthetic data
+h4:scratch-realworld From scratch | real-world data
+tab:tab-tmax Here is a preview of the daily maximum Air Temperatura measurements.
+tab:tab-rain Here is a preview of the daily cumulative Rainfall measurements.
+tab:tab-lonlat The coordinates in the geodetic reference system WGS84 (EPSG:4326).
+h4:interchange-format-local-file Interchange format | local file
+tab:tab-tday A preview of the Air Temperature data frame
+tab:echo A preview of the Air Temperature simple feature
+h4:existing-vector-data-model-local-file Existing Vector Data Model | local file
+tab:tab-dsm-improsta A preview of the Improsta farm digital soil map
+h4:existing-vector-data-model-remote-data-source Existing Vector Data Model | remote data source
+h3:export-of-a-simple-feature Export of a Simple Feature
+

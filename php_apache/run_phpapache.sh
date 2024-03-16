@@ -22,7 +22,7 @@ DEF_CONTAINER_NAME=php_apache-booklets
 DEF_NET_NAME=bridge
 # On VM RStudio Didactics on Granatellum proxmox:
 WEBAPPS=/home/giuliano/docker-persistencies/php_apache/html
-BOOK1=/home/giuliano/git/rstudio-classroom/bookcraft/courses/book/_book
+BOOK1=/home/giuliano/git/rstudio-classroom/bookcraft/lectures/_book
 
 # ========= ARGS =============
 IMAGE_NAME=${1:-$DEF_IMAGE_NAME}

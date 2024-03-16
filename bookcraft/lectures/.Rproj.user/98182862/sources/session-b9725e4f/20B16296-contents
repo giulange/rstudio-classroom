@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 Vector Data Model | A Minimal Set of Lectures Notes</title>
+<meta name="author" content="Giuliano Langella">
+<meta name="description" content="2.1 LINKS sf package : https://cran.r-project.org/web/packages/sf/sf.pdf sp package : …  2.2 Packages used  2.2.1 Install libraries The following commands can be skipped in the RStudio instance...">
+<meta name="generator" content="bookdown 0.37 with bs4_book()">
+<meta property="og:title" content="Chapter 2 Vector Data Model | A Minimal Set of Lectures Notes">
+<meta property="og:type" content="book">
+<meta property="og:description" content="2.1 LINKS sf package : https://cran.r-project.org/web/packages/sf/sf.pdf sp package : …  2.2 Packages used  2.2.1 Install libraries The following commands can be skipped in the RStudio instance...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 Vector Data Model | A Minimal Set of Lectures Notes">
+<meta name="twitter:description" content="2.1 LINKS sf package : https://cran.r-project.org/web/packages/sf/sf.pdf sp package : …  2.2 Packages used  2.2.1 Install libraries The following commands can be skipped in the RStudio instance...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">A Minimal Set of Lectures Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="geospatial-data.html"><span class="header-section-number">1</span> Geospatial Data</a></li>
+<li><a class="active" href="vector-data-model.html"><span class="header-section-number">2</span> Vector Data Model</a></li>
+<li><a class="" href="geospatial-data-visualization.html"><span class="header-section-number">3</span> Geospatial Data Visualization</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="vector-data-model" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Vector Data Model<a class="anchor" aria-label="anchor" href="#vector-data-model"><i class="fas fa-link"></i></a>
+</h1>
+<div id="links-1" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> LINKS<a class="anchor" aria-label="anchor" href="#links-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>sf package : <a href="https://cran.r-project.org/web/packages/sf/sf.pdf" class="uri">https://cran.r-project.org/web/packages/sf/sf.pdf</a> <br>
+sp package : …</p>
+</div>
+<div id="packages-used-1" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Packages used<a class="anchor" aria-label="anchor" href="#packages-used-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="install-libraries" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> Install libraries<a class="anchor" aria-label="anchor" href="#install-libraries"><i class="fas fa-link"></i></a>
+</h3>
+<p>The following commands can be skipped in the RStudio instance provided by the teacher during the course.</p>
+<p><strong>Note:</strong> the installation of geojsonio can be sometimes tricky.</p>
+</div>
+<div id="load-libraries" class="section level3" number="2.2.2">
+<h3>
+<span class="header-section-number">2.2.2</span> Load libraries<a class="anchor" aria-label="anchor" href="#load-libraries"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>          <span class="co"># classes and functions for vector data</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2()</span></span>
+<span><span class="co">#&gt; is TRUE</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster">raster</a></span><span class="op">)</span>      <span class="co"># classes and functions for raster data</span></span>
+<span><span class="co">#&gt; Loading required package: sp</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jakubnowosad.com/spData/">spData</a></span><span class="op">)</span>      <span class="co"># load geographic data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Nowosad/spData">spDataLarge</a></span><span class="op">)</span> <span class="co"># load larger geographic data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/osmdata/">osmdata</a></span><span class="op">)</span>     <span class="co"># Open Street Map</span></span>
+<span><span class="co">#&gt; Loading required package: osmdata</span></span>
+<span><span class="co">#&gt; Data (c) OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright</span></span>
+<span><span class="co">#library(geojsonio)</span></span>
+<span><span class="co">#library(repr)</span></span></code></pre></div>
+</div>
+</div>
+<div id="an-introduction-to-simple-features" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> An introduction to simple features<a class="anchor" aria-label="anchor" href="#an-introduction-to-simple-features"><i class="fas fa-link"></i></a>
+</h2>
+<p><br><img src="/home/giuliano/artwork/sf-classes.png" style="float: left; width: 60%; margin-right: 8%; margin-bottom: 0.5em;"></p>
+<p>Simple features is an open standard developed and endorsed by the <a href="https://www.opengeospatial.org">Open Geospatial Consortium (OGC)</a>, a not-for-profit organization.<br>
+Simple Features (<b>SF</b>) is a hierarchical data model that represents a wide range of geometry types.<br>
+Of 17 geometry types supported by the specification, only 7 are used in the vast majority of geographic research (see Figure below); these core geometry types are fully supported by the R package <i>sf</i>.<br></p>
+<p>Geometries are the basic building blocks of simple features.
+Simple features in R can take on one of the 17 geometry types supported by the sf package.
+We will focus on the seven most commonly used types: <strong>POINT</strong>, <strong>LINESTRING</strong>, <strong>POLYGON</strong>, <strong>MULTIPOINT</strong>, <strong>MULTILINESTRING</strong>, <strong>MULTIPOLYGON</strong>, <strong>GEOMETRYCOLLECTION</strong>.</p>
+<p>Find the whole list of possible feature types in the <a href="http://postgis.net/docs/using_postgis_dbmanagement.html">PostGIS manual</a>.</p>
+<p><b style="color:red">The basis for each geometry type is the point.</b></p>
+A point is simply a coordinate in <strong>2D</strong>, 3D or 4D space, from which the 7 geometry types can be derived:
+<ul>
+<li>
+POINT (5 2)
+</li>
+<li>
+LINESTRING (1 5, 4 4, 4 1, 2 2, 3 2)
+</li>
+<li>
+POLYGON ((1 5, 2 2, 4 1, 4 4, 1 5))
+</li>
+<li>
+MULTIPOINT (5 2, 1 3, 3 4, 3 2)
+</li>
+<li>
+MULTILINESTRING ((1 5, 4 4, 4 1, 2 2, 3 2), (1 2, 2 4))
+</li>
+<li>
+MULTIPOLYGON (((1 5, 2 2, 4 1, 4 4, 1 5), (0 2, 1 2, 1 3, 0 3, 0 2)))
+</li>
+<li>
+GEOMETRYCOLLECTION (MULTIPOINT (5 2, 1 3, 3 4, 3 2), LINESTRING (1 5, 4 4, 4 1, 2 2, 3 2))
+</li>
+</ul>
+<div id="why-simple-features" class="section level3" number="2.3.1">
+<h3>
+<span class="header-section-number">2.3.1</span> Why simple features?<a class="anchor" aria-label="anchor" href="#why-simple-features"><i class="fas fa-link"></i></a>
+</h3>
+<p>Because it is a widely supported data model that underlies data structures in many GIS applications including <strong>QGIS</strong> and <strong>PostGIS</strong>.<br>
+A major advantage of this is that using the data model ensures your work is cross-transferable to other set-ups, for example importing from and exporting to spatial databases.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span> <span class="co"># see which vignettes are available</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"sf1"</span><span class="op">)</span>          <span class="co"># an introduction to the package</span></span></code></pre></div>
+</div>
+</div>
+<div id="simple-feature-geometry-sfg" class="section level2" number="2.4">
+<h2>
+<span class="header-section-number">2.4</span> Simple feature geometry (sfg)<a class="anchor" aria-label="anchor" href="#simple-feature-geometry-sfg"><i class="fas fa-link"></i></a>
+</h2>
+<p><br></p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="45%">
+<col width="55%">
+</colgroup>
+<thead><tr class="header">
+<th>Type</th>
+<th>R sf function</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>A point:</td>
+<td><font size="4" color="green">st_point( )</font></td>
+</tr>
+<tr class="even">
+<td>A linestring:</td>
+<td><font size="4" color="green">st_linestring( )</font></td>
+</tr>
+<tr class="odd">
+<td>A polygon:</td>
+<td><font size="4" color="green">st_polygon( )</font></td>
+</tr>
+<tr class="even">
+<td>A multipoint:</td>
+<td><font size="4" color="green">st_multipoint( )</font></td>
+</tr>
+<tr class="odd">
+<td>A multilinestring:</td>
+<td><font size="4" color="green">st_multilinestring( )</font></td>
+</tr>
+<tr class="even">
+<td>A multipolygon:</td>
+<td><font size="4" color="green">st_multipolygon( )</font></td>
+</tr>
+<tr class="odd">
+<td>A geometry collection:</td>
+<td><font size="4" color="green">st_geometrycollection( )</font></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<b>sfg</b> objects can be created from three base R data types:
+<ol>
+<li>
+A numeric vector: a single point
+</li>
+<li>
+A matrix: a set of points, where each row represents a point, a multipoint or linestring
+</li>
+<li>
+A list: a collection of objects such as matrices, multilinestrings or geometry collections
+</li>
+</ol>
+<p><strong>(I have to make some examples about vector, matrix and list of points)</strong></p>
+<div id="point" class="section level3" number="2.4.1">
+<h3>
+<span class="header-section-number">2.4.1</span> POINT<a class="anchor" aria-label="anchor" href="#point"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create a <strong>POINT</strong> geometry and plot it:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pt</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_point</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">pt</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "XY"    "POINT" "sfg"</span></span>
+<span><span class="va">pt</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">pt</span>,col<span class="op">=</span><span class="st">"red"</span>,pch<span class="op">=</span><span class="fl">16</span>, cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-2-1.png" width="672"></div>
+</div>
+<div id="linestring" class="section level3" number="2.4.2">
+<h3>
+<span class="header-section-number">2.4.2</span> LINESTRING<a class="anchor" aria-label="anchor" href="#linestring"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create a matrix of 3 points connected by straight lines:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linestring_matrix</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span> , <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span> <span class="va">linestring_matrix</span> <span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "matrix" "array"</span></span></code></pre></div>
+<p>Create a <strong>LINESTRING</strong> and plot it:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ln</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_linestring</a></span><span class="op">(</span> <span class="va">linestring_matrix</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">ln</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "XY"         "LINESTRING" "sfg"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">ln</span>,col<span class="op">=</span><span class="st">"green"</span>, lwd<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+</div>
+<div id="polygon" class="section level3" number="2.4.3">
+<h3>
+<span class="header-section-number">2.4.3</span> POLYGON<a class="anchor" aria-label="anchor" href="#polygon"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create a list of 4 points, in which the <strong>first</strong> and the <strong>last</strong> points are the same:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">polygon_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span> , <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span> <span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span> <span class="va">polygon_list</span> <span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "list"</span></span></code></pre></div>
+<p>Create a <strong>POLYGON</strong> of three points (since the first and the laste are identical…):</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pg</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_polygon</a></span><span class="op">(</span> <span class="va">polygon_list</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">pg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "XY"      "POLYGON" "sfg"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">pg</span>,col<span class="op">=</span><span class="st">"yellow"</span>,lwd<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+</div>
+<div id="multipoint" class="section level3" number="2.4.4">
+<h3>
+<span class="header-section-number">2.4.4</span> MULTIPOINT<a class="anchor" aria-label="anchor" href="#multipoint"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create a matrix of 3 points:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">multipoint_matrix</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span> , <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span> <span class="va">multipoint_matrix</span> <span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "matrix" "array"</span></span></code></pre></div>
+<p>Create a <strong>MULTIPOINT</strong> geometry and plot it (the set of points belongs to the same record / observation):</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mp</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_multipoint</a></span><span class="op">(</span> <span class="va">multipoint_matrix</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "XY"         "MULTIPOINT" "sfg"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">mp</span>,col<span class="op">=</span><span class="st">"magenta"</span>, pch<span class="op">=</span><span class="fl">16</span>, cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+</div>
+<div id="multilinestring" class="section level3" number="2.4.5">
+<h3>
+<span class="header-section-number">2.4.5</span> MULTILINESTRING<a class="anchor" aria-label="anchor" href="#multilinestring"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create a list of 10 points:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">multilinestring_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">)</span> , </span>
+<span>                             <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">)</span> </span>
+<span>                           <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">multilinestring_list</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "list"</span></span></code></pre></div>
+<p>Create a <strong>MULTILINESTRING</strong> geometry and plot it:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mln</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_multilinestring</a></span><span class="op">(</span> <span class="va">multilinestring_list</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">mln</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "XY"              "MULTILINESTRING" "sfg"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">mln</span>,col<span class="op">=</span><span class="st">"blue"</span>,lwd<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+</div>
+<div id="multipolygon" class="section level3" number="2.4.6">
+<h3>
+<span class="header-section-number">2.4.6</span> MULTIPOLYGON<a class="anchor" aria-label="anchor" href="#multipolygon"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create a nested list (i.e. list of list) of 10 points (the same points used in the MULTILINESTRING before):</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">multipolygon_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>,</span>
+<span>                         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span>                        <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">multipolygon_list</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "list"</span></span></code></pre></div>
+<p>Create a <strong>MULTIPOLYGON</strong> geometry and plot it:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mpg</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_multipolygon</a></span><span class="op">(</span> <span class="va">multipolygon_list</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">mpg</span>,col<span class="op">=</span><span class="st">"gray"</span>,lwd<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+</div>
+<div id="geometrycollection" class="section level3" number="2.4.7">
+<h3>
+<span class="header-section-number">2.4.7</span> GEOMETRYCOLLECTION<a class="anchor" aria-label="anchor" href="#geometrycollection"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create two matrices of 4 and 5 points:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">multipoint_matrix</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">linestring_matrix</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">multipoint_matrix</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "matrix" "array"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linestring_matrix</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "matrix" "array"</span></span></code></pre></div>
+<p>Create a <strong>GEOMETRYCOLLECTION</strong> geometry fusing a <strong>MULTIPOINT</strong> and a <strong>LINESTRING</strong> together:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">geometrycollection_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_multipoint</a></span><span class="op">(</span><span class="va">multipoint_matrix</span><span class="op">)</span>,</span>
+<span>                              <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_linestring</a></span><span class="op">(</span><span class="va">linestring_matrix</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gcoll</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_geometrycollection</a></span><span class="op">(</span><span class="va">geometrycollection_list</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">gcoll</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "XY"                 "GEOMETRYCOLLECTION"</span></span>
+<span><span class="co">#&gt; [3] "sfg"</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">gcoll</span>,col<span class="op">=</span><span class="st">"violet"</span>,pch<span class="op">=</span><span class="fl">16</span>,cex<span class="op">=</span><span class="fl">2</span>,lwd<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>,labels<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-15-1.png" width="672"></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry_type.html">st_geometry_type</a></span><span class="op">(</span><span class="va">gcoll</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] GEOMETRYCOLLECTION</span></span>
+<span><span class="co">#&gt; 18 Levels: GEOMETRY POINT LINESTRING POLYGON ... TRIANGLE</span></span></code></pre></div>
+</div>
+</div>
+<div id="simple-features-column-sfc" class="section level2" number="2.5">
+<h2>
+<span class="header-section-number">2.5</span> Simple features column (sfc)<a class="anchor" aria-label="anchor" href="#simple-features-column-sfc"><i class="fas fa-link"></i></a>
+</h2>
+<p>Think about the requirement of a soil survey in which we need to observe two soil profiles in the field.
+We have to collect soil samples from the topsoil and then carry out laboratory analysis to retrieve physical and chemical soil properties.
+The first step is to select the localization of the two points, which means that we can attach to each geospatial point two coordinates given by our GPS device. For instance, using simple coordinates for the sake of clarity:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Soil Profile ID</th>
+<th>Geospatial Coordinates (x,y)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(P_1\)</span></td>
+<td><font color="green">(5,2)</font></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(P_2\)</span></td>
+<td><font color="green">(1,3)</font></td>
+</tr>
+</tbody>
+</table></div>
+<p>We can create two <strong>POINT</strong> geometries as follows:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">P1</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">P2</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-18-1.png" width="672"></div>
+<p>How can we create an object in which collecting the geospatial location of the soil profiles?</p>
+<div id="from-pure-geometry-of-distinct-points-to-a-set-of-organized-records-sfg" class="section level3" number="2.5.1">
+<h3>
+<span class="header-section-number">2.5.1</span> From pure geometry of distinct POINTs to a set of organized records (SFG)<a class="anchor" aria-label="anchor" href="#from-pure-geometry-of-distinct-points-to-a-set-of-organized-records-sfg"><i class="fas fa-link"></i></a>
+</h3>
+<p>One <b>sfg</b> object contains only a single simple feature geometry. <br></p>
+<p>A <b>simple feature geometry column</b> (<b>sfc</b>) can collect more <strong>sfg</strong> objects:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">points_sfc</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc</a></span><span class="op">(</span><span class="va">P1</span>, <span class="va">P1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">points_sfc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "sfc_POINT" "sfc"</span></span></code></pre></div>
+<p>Print in R console the metadata associated to the <strong>SFC</strong> object:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">points_sfc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Geometry set for 2 features </span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 5 ymin: 2 xmax: 5 ymax: 2</span></span>
+<span><span class="co">#&gt; CRS:           NA</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span></code></pre></div>
+<p>In addition, as you can see in the print above, the <strong>sfc</strong> can manage also the information about the Coordinate Reference System (<strong>CRS</strong>) in use.
+In the command above <code>st_sfc(P1, P1)</code> we didn’t set the CRS and the <code><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc()</a></code> function has a dedicated argument to do this, e.g. <code>st_sfc(..., crs=4326)</code>.</p>
+<p>A <strong>Simple Feature Column</strong> (<strong>SFC</strong>) can be built for any collection of geometry types.</p>
+<p>In the following example, two records representing two forest patches are listed together to get a SFG:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Forest Patch #1, e.g. Pinus</span></span>
+<span><span class="va">polygon_list1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">polygon1</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_polygon</a></span><span class="op">(</span><span class="va">polygon_list1</span><span class="op">)</span></span>
+<span><span class="co"># Forest Patch #2, e.g. Quercus</span></span>
+<span><span class="va">polygon_list2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">polygon2</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_polygon</a></span><span class="op">(</span><span class="va">polygon_list2</span><span class="op">)</span></span>
+<span><span class="co"># SFG</span></span>
+<span><span class="va">polygon_sfc</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc</a></span><span class="op">(</span><span class="va">polygon1</span>, <span class="va">polygon2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">polygon_sfc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Geometry set for 2 features </span></span>
+<span><span class="co">#&gt; Geometry type: POLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 0 ymin: 1 xmax: 4 ymax: 5</span></span>
+<span><span class="co">#&gt; CRS:           NA</span></span>
+<span><span class="co">#&gt; POLYGON ((1 5, 2 2, 4 1, 4 4, 1 5))</span></span>
+<span><span class="co">#&gt; POLYGON ((0 2, 1 2, 1 3, 0 3, 0 2))</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">polygon_sfc</span>, col<span class="op">=</span><span class="st">"gray"</span>, lwd<span class="op">=</span><span class="fl">5</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">5</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:sfc-polygons-forest-types"></span>
+<img src="03-vector-geodata_files/figure-html/sfc-polygons-forest-types-1.png" alt="Two forest patches managed using a SFC." width="672"><p class="caption">
+Figure 2.1: Two forest patches managed using a SFC.
+</p>
+</div>
+<p>It is also possible to create a <strong>SFC</strong> object from a set of <strong>SFG</strong> having different geometry types:</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># combining objects created above:</span></span>
+<span><span class="va">mixed_sfc</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc</a></span><span class="op">(</span><span class="va">P1</span>, <span class="va">mln</span>, <span class="va">polygon1</span><span class="op">)</span></span>
+<span><span class="co"># plot:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">mixed_sfc</span>, pch<span class="op">=</span><span class="fl">16</span>, cex<span class="op">=</span><span class="fl">2</span>, lwd<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-22-1.png" width="672"></div>
+</div>
+<div id="crs-coordinate-reference-system" class="section level3" number="2.5.2">
+<h3>
+<span class="header-section-number">2.5.2</span> CRS (Coordinate Reference System)<a class="anchor" aria-label="anchor" href="#crs-coordinate-reference-system"><i class="fas fa-link"></i></a>
+</h3>
+<p><b>SFC</b> objects can additionally store information on the coordinate reference systems (CRS).<br>
+To specify a certain CRS, we can use the <b>EPSG</b> (SRID) or <b>proj4string</b> attributes of an sfc object. <br></p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">points_sfc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Geometry set for 2 features </span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 5 ymin: 2 xmax: 5 ymax: 2</span></span>
+<span><span class="co">#&gt; CRS:           NA</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span></code></pre></div>
+<p>The default value of EPSG (SRID) and proj4string is <b>NA</b> (Not Available), as can be verified with the function <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs( )</a></code>:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">points_sfc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Coordinate Reference System: NA</span></span></code></pre></div>
+<p>The argument <code>crs</code> is used to set the Reference System in use by the coordinates. In our simple example, we assume GCS (<strong>G</strong>eodetic <strong>C</strong>oordinate reference <strong>S</strong>ystem) in which the points <span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span> have geographical coordinates <strong>Longitude</strong> and <strong>Latitude</strong> (WGS84 datum):</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># EPSG definition</span></span>
+<span><span class="va">points_sfc_wgs</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc</a></span><span class="op">(</span><span class="va">P1</span>, <span class="va">P2</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">points_sfc_wgs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Geometry set for 2 features </span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 1 ymin: 2 xmax: 5 ymax: 3</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span>
+<span><span class="co">#&gt; POINT (1 3)</span></span></code></pre></div>
+<p>A detailed reading of the CRS is made:</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">points_sfc_wgs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Coordinate Reference System:</span></span>
+<span><span class="co">#&gt;   User input: EPSG:4326 </span></span>
+<span><span class="co">#&gt;   wkt:</span></span>
+<span><span class="co">#&gt; GEOGCRS["WGS 84",</span></span>
+<span><span class="co">#&gt;     ENSEMBLE["World Geodetic System 1984 ensemble",</span></span>
+<span><span class="co">#&gt;         MEMBER["World Geodetic System 1984 (Transit)"],</span></span>
+<span><span class="co">#&gt;         MEMBER["World Geodetic System 1984 (G730)"],</span></span>
+<span><span class="co">#&gt;         MEMBER["World Geodetic System 1984 (G873)"],</span></span>
+<span><span class="co">#&gt;         MEMBER["World Geodetic System 1984 (G1150)"],</span></span>
+<span><span class="co">#&gt;         MEMBER["World Geodetic System 1984 (G1674)"],</span></span>
+<span><span class="co">#&gt;         MEMBER["World Geodetic System 1984 (G1762)"],</span></span>
+<span><span class="co">#&gt;         MEMBER["World Geodetic System 1984 (G2139)"],</span></span>
+<span><span class="co">#&gt;         ELLIPSOID["WGS 84",6378137,298.257223563,</span></span>
+<span><span class="co">#&gt;             LENGTHUNIT["metre",1]],</span></span>
+<span><span class="co">#&gt;         ENSEMBLEACCURACY[2.0]],</span></span>
+<span><span class="co">#&gt;     PRIMEM["Greenwich",0,</span></span>
+<span><span class="co">#&gt;         ANGLEUNIT["degree",0.0174532925199433]],</span></span>
+<span><span class="co">#&gt;     CS[ellipsoidal,2],</span></span>
+<span><span class="co">#&gt;         AXIS["geodetic latitude (Lat)",north,</span></span>
+<span><span class="co">#&gt;             ORDER[1],</span></span>
+<span><span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433]],</span></span>
+<span><span class="co">#&gt;         AXIS["geodetic longitude (Lon)",east,</span></span>
+<span><span class="co">#&gt;             ORDER[2],</span></span>
+<span><span class="co">#&gt;             ANGLEUNIT["degree",0.0174532925199433]],</span></span>
+<span><span class="co">#&gt;     USAGE[</span></span>
+<span><span class="co">#&gt;         SCOPE["Horizontal component of 3D system."],</span></span>
+<span><span class="co">#&gt;         AREA["World."],</span></span>
+<span><span class="co">#&gt;         BBOX[-90,-180,90,180]],</span></span>
+<span><span class="co">#&gt;     ID["EPSG",4326]]</span></span></code></pre></div>
+</div>
+</div>
+<div id="the-sf-class" class="section level2" number="2.6">
+<h2>
+<span class="header-section-number">2.6</span> The SF class<a class="anchor" aria-label="anchor" href="#the-sf-class"><i class="fas fa-link"></i></a>
+</h2>
+<p>A <b>‘SF Geometry’</b> object is purely <u>geometric</u> and a <b>‘SF Column’</b> object is a <u>geographic</u> building block.<br>
+In order to create a SF we need to fulfil the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Create two SFG, e.g. POINT geometry (<span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span>) (add a link here to the section).</li>
+<li>Create a SFC, e.g. collect together <span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span> and define a <strong>CRS</strong> (add a link here to the section).</li>
+<li>Create a table of attributes (or variables) by means of which real-world entities can be described and create a <strong>Simple Feature</strong> (<strong>SF</strong>) <code><a href="https://r-spatial.github.io/sf/reference/sf.html">st_sf( )</a></code>.</li>
+</ol>
+<p>Real-world entities, such as soils, have measurable characteristics that we can be stored in attributes or variables.<br>
+The third and final building block to get a <strong>SF</strong> is the creation of these non-geographic attributes.<br>
+Let’s build an example from scratch:</p>
+<p>Step 01:</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">P1_sfg</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">P2_sfg</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">P1_sfg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span></code></pre></div>
+<p>Step 02:</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">P_sfc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc</a></span><span class="op">(</span><span class="va">P1_sfg</span>, <span class="va">P2_sfg</span>, crs<span class="op">=</span><span class="fl">4326</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">P_sfc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Geometry set for 2 features </span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 1 ymin: 2 xmax: 5 ymax: 3</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt; POINT (5 2)</span></span>
+<span><span class="co">#&gt; POINT (1 3)</span></span></code></pre></div>
+<p>Step 03:</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">attrib</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> clay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">25</span>,<span class="fl">47</span><span class="op">)</span>, sand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">23</span><span class="op">)</span>, silt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">45</span>,<span class="fl">30</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">P_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sf.html">st_sf</a></span><span class="op">(</span><span class="va">attrib</span>,<span class="va">P_sfc</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">P_sf</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 2 features and 3 fields</span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 1 ymin: 2 xmax: 5 ymax: 3</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt;   clay sand silt       P_sfc</span></span>
+<span><span class="co">#&gt; 1   25   30   45 POINT (5 2)</span></span>
+<span><span class="co">#&gt; 2   47   23   30 POINT (1 3)</span></span></code></pre></div>
+<p>In the above R object we have all the information, both data and metadata, required to fully describe a Simple Feature as defined by the OGC Standard.<br></p>
+<p>The vector data model created for the simple example above can be managed in R but also exported to be managed in whatever software capable of GIS funcionalities.</p>
+<div id="creation-of-a-simple-feature" class="section level3" number="2.6.1">
+<h3>
+<span class="header-section-number">2.6.1</span> Creation of a Simple Feature<a class="anchor" aria-label="anchor" href="#creation-of-a-simple-feature"><i class="fas fa-link"></i></a>
+</h3>
+<p>A simple feature can be created:</p>
+<ul>
+<li>from scratch, using synthetic/real-world data</li>
+<li>from a vector data model stored in a local/remote file</li>
+</ul>
+<div id="from-scratch-synthetic-data" class="section level4" number="2.6.1.1">
+<h4>
+<span class="header-section-number">2.6.1.1</span> From scratch | synthetic data<a class="anchor" aria-label="anchor" href="#from-scratch-synthetic-data"><i class="fas fa-link"></i></a>
+</h4>
+<p>(reference the example above using P1 and P2, otherwise create a new example -&gt; forest or livestock)</p>
+</div>
+<div id="scratch-realworld" class="section level4" number="2.6.1.2">
+<h4>
+<span class="header-section-number">2.6.1.2</span> From scratch | real-world data<a class="anchor" aria-label="anchor" href="#scratch-realworld"><i class="fas fa-link"></i></a>
+</h4>
+<p>In this example we read data from files which are not designed to implement any vector data model.<br>
+The temperature and precipitation measurements carried out by standard agrometeorological ground stations are extracted from Excel files (Excel format is not the best interoperable practice):</p>
+<p>Both the <code>measurements</code> and the <code>geolocalization</code> tables are used in the reading / import below:</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: readxl</span></span>
+<span><span class="va">Tmax</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Tmax.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"measurements"</span>, na <span class="op">=</span> <span class="st">"NA"</span><span class="op">)</span></span>
+<span><span class="va">Rain</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Rainfall.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"measurements"</span>, na <span class="op">=</span> <span class="st">"NA"</span><span class="op">)</span></span>
+<span><span class="va">lonlat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Tmax.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"geolocalization"</span>, na <span class="op">=</span> <span class="st">"NA"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<caption>
+<span id="tab:tab-tmax">Table 2.1: </span>Here is a preview of the daily maximum Air Temperatura measurements.</caption>
+<colgroup>
+<col width="15%">
+<col width="13%">
+<col width="17%">
+<col width="21%">
+<col width="12%">
+<col width="19%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">DATE</th>
+<th align="right">MODENAURB</th>
+<th align="right">SAGATABOAGRO</th>
+<th align="right">ZOLAPREDOSAAGRO</th>
+<th align="left">RAVARINO</th>
+<th align="right">CORREGGIOAGRO</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">2007-01-01</td>
+<td align="right">6.5</td>
+<td align="right">7.0</td>
+<td align="right">8.4</td>
+<td align="left">NA</td>
+<td align="right">6.6</td>
+</tr>
+<tr class="even">
+<td align="left">2007-01-02</td>
+<td align="right">10.9</td>
+<td align="right">10.0</td>
+<td align="right">10.5</td>
+<td align="left">NA</td>
+<td align="right">12.5</td>
+</tr>
+<tr class="odd">
+<td align="left">2007-01-03</td>
+<td align="right">13.3</td>
+<td align="right">12.9</td>
+<td align="right">13.5</td>
+<td align="left">NA</td>
+<td align="right">13.4</td>
+</tr>
+<tr class="even">
+<td align="left">2007-01-04</td>
+<td align="right">9.5</td>
+<td align="right">7.0</td>
+<td align="right">7.6</td>
+<td align="left">NA</td>
+<td align="right">7.0</td>
+</tr>
+<tr class="odd">
+<td align="left">2007-01-05</td>
+<td align="right">10.5</td>
+<td align="right">11.9</td>
+<td align="right">10.5</td>
+<td align="left">NA</td>
+<td align="right">10.3</td>
+</tr>
+</tbody>
+</table></div>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<caption>
+<span id="tab:tab-rain">Table 2.2: </span>Here is a preview of the daily cumulative Rainfall measurements.</caption>
+<colgroup>
+<col width="15%">
+<col width="13%">
+<col width="17%">
+<col width="21%">
+<col width="12%">
+<col width="19%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">DATE</th>
+<th align="right">MODENAURB</th>
+<th align="right">SAGATABOAGRO</th>
+<th align="right">ZOLAPREDOSAAGRO</th>
+<th align="right">RAVARINO</th>
+<th align="right">CORREGGIOAGRO</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">2007-01-01</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+</tr>
+<tr class="even">
+<td align="left">2007-01-02</td>
+<td align="right">0.4</td>
+<td align="right">0.4</td>
+<td align="right">1.6</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+</tr>
+<tr class="odd">
+<td align="left">2007-01-03</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">0.2</td>
+</tr>
+<tr class="even">
+<td align="left">2007-01-04</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+</tr>
+<tr class="odd">
+<td align="left">2007-01-05</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0.0</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+</tr>
+</tbody>
+</table></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:tab-lonlat">Table 2.3: </span>The coordinates in the geodetic reference system WGS84 (EPSG:4326).</caption>
+<thead><tr class="header">
+<th align="left">Station</th>
+<th align="right">Longitude</th>
+<th align="right">Latitude</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">MODENAURB</td>
+<td align="right">10.91571</td>
+<td align="right">44.65191</td>
+</tr>
+<tr class="even">
+<td align="left">SAGATABOAGRO</td>
+<td align="right">11.13887</td>
+<td align="right">44.68841</td>
+</tr>
+<tr class="odd">
+<td align="left">ZOLAPREDOSAAGRO</td>
+<td align="right">11.19870</td>
+<td align="right">44.48924</td>
+</tr>
+<tr class="even">
+<td align="left">RAVARINO</td>
+<td align="right">11.10133</td>
+<td align="right">44.71573</td>
+</tr>
+<tr class="odd">
+<td align="left">CORREGGIOAGRO</td>
+<td align="right">10.76922</td>
+<td align="right">44.73740</td>
+</tr>
+</tbody>
+</table></div>
+<p>Extract coordinates, temperature and rainfall measurements for <code>MODENAURB</code> station on <code>2007-01-01</code>:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">name</span> <span class="op">&lt;-</span> <span class="va">lonlat</span><span class="op">$</span><span class="va">Station</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">t1</span>   <span class="op">&lt;-</span> <span class="va">Tmax</span><span class="op">$</span><span class="va">MODENAURB</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">r1</span>   <span class="op">&lt;-</span> <span class="va">Rain</span><span class="op">$</span><span class="va">MODENAURB</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">d1</span>   <span class="op">&lt;-</span> <span class="va">Tmax</span><span class="op">$</span><span class="va">DATE</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">lon</span>  <span class="op">&lt;-</span> <span class="va">lonlat</span><span class="op">$</span><span class="va">Longitude</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">lat</span>  <span class="op">&lt;-</span> <span class="va">lonlat</span><span class="op">$</span><span class="va">Latitude</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">lon</span>,<span class="va">lat</span>,<span class="va">t1</span>,<span class="va">r1</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "MODENAURB" "10.91571"  "44.65191"  "6.5"      </span></span>
+<span><span class="co">#&gt; [5] "0"</span></span></code></pre></div>
+<p>Create a Simple Feature using the values extracted above:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">point</span>   <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span>        <span class="co"># 1. sfg object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">point</span><span class="op">)</span>                           <span class="co">#    see that the class is a sfg</span></span>
+<span><span class="co">#&gt; [1] "XY"    "POINT" "sfg"</span></span>
+<span><span class="va">geom</span>    <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc</a></span><span class="op">(</span><span class="va">point</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span>    <span class="co"># 2. sfc object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">geom</span><span class="op">)</span>                            <span class="co">#    see that the class is a sfc</span></span>
+<span><span class="co">#&gt; [1] "sfc_POINT" "sfc"</span></span>
+<span><span class="va">attrib</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>                  <span class="co"># 3. attributes</span></span>
+<span>   name <span class="op">=</span> <span class="va">name</span>,                        <span class="co">#    Station name, "MODENAURB"</span></span>
+<span>   date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">d1</span><span class="op">)</span>,                 <span class="co">#    Convert the date-time in date, on '2007-01-01'</span></span>
+<span>   temperature <span class="op">=</span> <span class="va">t1</span>,                   <span class="co">#    Air Temperature for "MODENAURB" on '2007-01-01'</span></span>
+<span>   rainfall <span class="op">=</span> <span class="va">r1</span>                       <span class="co">#    Rainfall for "MODENAURB" on '2007-01-01'</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Simple Feature (Collection):</span></span>
+<span><span class="va">SF</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sf.html">st_sf</a></span><span class="op">(</span><span class="va">attrib</span>, geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>    <span class="co"># 3. sf object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">SF</span><span class="op">)</span>                              <span class="co">#    see that the class is a sf</span></span>
+<span><span class="co">#&gt; [1] "sf"         "data.frame"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">SF</span><span class="op">)</span>                              <span class="co">#    see both metadata and data in the simple feature</span></span>
+<span><span class="co">#&gt; Simple feature collection with 1 feature and 4 fields</span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 10.91571 ymin: 44.65191 xmax: 10.91571 ymax: 44.65191</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt;        name       date temperature rainfall</span></span>
+<span><span class="co">#&gt; 1 MODENAURB 2007-01-01         6.5        0</span></span>
+<span><span class="co">#&gt;                    geometry</span></span>
+<span><span class="co">#&gt; 1 POINT (10.91571 44.65191)</span></span></code></pre></div>
+<p>In the example provided above, only one record was created but it is possible to add more records (or features) belonging to both other stations and other dates.</p>
+<p>The list of variable / attributes / fields (in this handbook the term variable is prefered):</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">SF</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "name"        "date"        "temperature" "rainfall"   </span></span>
+<span><span class="co">#&gt; [5] "geometry"</span></span></code></pre></div>
+<p>Print the geometry only:</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">SF</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Geometry set for 1 feature </span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 10.91571 ymin: 44.65191 xmax: 10.91571 ymax: 44.65191</span></span>
+<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span><span class="co">#&gt; POINT (10.91571 44.65191)</span></span></code></pre></div>
+</div>
+<div id="interchange-format-local-file" class="section level4" number="2.6.1.3">
+<h4>
+<span class="header-section-number">2.6.1.3</span> Interchange format | local file<a class="anchor" aria-label="anchor" href="#interchange-format-local-file"><i class="fas fa-link"></i></a>
+</h4>
+<p>Load the air temperature measurements carried out by the standard agrometeorological ground stations (IoT context):<br></p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="st">'../datasets/interoperable'</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:tab-tday">Table 2.4: </span>A preview of the Air Temperature data frame</caption>
+<colgroup>
+<col width="32%">
+<col width="13%">
+<col width="13%">
+<col width="7%">
+<col width="14%">
+<col width="5%">
+<col width="7%">
+<col width="5%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Name</th>
+<th align="right">lon</th>
+<th align="right">lat</th>
+<th align="right">elev</th>
+<th align="right">mean</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">N</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Acerra 26</td>
+<td align="right">14.42840</td>
+<td align="right">40.96617</td>
+<td align="right">26</td>
+<td align="right">12.482518</td>
+<td align="right">9.6</td>
+<td align="right">13.7</td>
+<td align="right">143</td>
+</tr>
+<tr class="even">
+<td align="left">Airola 154</td>
+<td align="right">14.59057</td>
+<td align="right">41.07170</td>
+<td align="right">154</td>
+<td align="right">10.090909</td>
+<td align="right">7.7</td>
+<td align="right">11.3</td>
+<td align="right">77</td>
+</tr>
+<tr class="odd">
+<td align="left">Alife</td>
+<td align="right">14.33372</td>
+<td align="right">41.33922</td>
+<td align="right">117</td>
+<td align="right">12.315972</td>
+<td align="right">9.1</td>
+<td align="right">14.1</td>
+<td align="right">144</td>
+</tr>
+<tr class="even">
+<td align="left">Alife 152</td>
+<td align="right">14.28492</td>
+<td align="right">41.34177</td>
+<td align="right">152</td>
+<td align="right">12.113986</td>
+<td align="right">9.4</td>
+<td align="right">13.9</td>
+<td align="right">143</td>
+</tr>
+<tr class="odd">
+<td align="left">Altavilla Irpina</td>
+<td align="right">14.78386</td>
+<td align="right">41.00628</td>
+<td align="right">352</td>
+<td align="right">8.765972</td>
+<td align="right">5.0</td>
+<td align="right">11.1</td>
+<td align="right">144</td>
+</tr>
+<tr class="even">
+<td align="left">Alvignano</td>
+<td align="right">14.39467</td>
+<td align="right">41.21825</td>
+<td align="right">235</td>
+<td align="right">10.397917</td>
+<td align="right">7.2</td>
+<td align="right">12.2</td>
+<td align="right">144</td>
+</tr>
+<tr class="odd">
+<td align="left">Apice 597</td>
+<td align="right">14.97204</td>
+<td align="right">41.12760</td>
+<td align="right">597</td>
+<td align="right">6.366197</td>
+<td align="right">3.1</td>
+<td align="right">9.9</td>
+<td align="right">142</td>
+</tr>
+<tr class="even">
+<td align="left">Ariano Irpino</td>
+<td align="right">15.08542</td>
+<td align="right">41.14853</td>
+<td align="right">678</td>
+<td align="right">5.808333</td>
+<td align="right">3.1</td>
+<td align="right">8.0</td>
+<td align="right">144</td>
+</tr>
+<tr class="odd">
+<td align="left">Auletta</td>
+<td align="right">15.42831</td>
+<td align="right">40.55181</td>
+<td align="right">194</td>
+<td align="right">9.980556</td>
+<td align="right">3.7</td>
+<td align="right">13.6</td>
+<td align="right">144</td>
+</tr>
+<tr class="even">
+<td align="left">Avellino Genio Civile</td>
+<td align="right">14.78358</td>
+<td align="right">40.91197</td>
+<td align="right">360</td>
+<td align="right">9.108333</td>
+<td align="right">6.3</td>
+<td align="right">10.9</td>
+<td align="right">144</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">t_day</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "data.frame"</span></span></code></pre></div>
+<p>Convert a data frame into a simple feature (see the new field <code>geometry</code> created by the function <code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf()</a></code>):</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></span>
+<span><span class="va">t_day_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="va">t_day</span>,coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>,<span class="st">"lat"</span><span class="op">)</span>, crs<span class="op">=</span><span class="fl">4326</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:unnamed-chunk-36">Table 2.5: </span>A preview of the Air Temperature simple feature</caption>
+<colgroup>
+<col width="28%">
+<col width="6%">
+<col width="13%">
+<col width="5%">
+<col width="6%">
+<col width="5%">
+<col width="34%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Name</th>
+<th align="right">elev</th>
+<th align="right">mean</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">N</th>
+<th align="left">geometry</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Acerra 26</td>
+<td align="right">26</td>
+<td align="right">12.482518</td>
+<td align="right">9.6</td>
+<td align="right">13.7</td>
+<td align="right">143</td>
+<td align="left">POINT (14.4284 40.96617)</td>
+</tr>
+<tr class="even">
+<td align="left">Airola 154</td>
+<td align="right">154</td>
+<td align="right">10.090909</td>
+<td align="right">7.7</td>
+<td align="right">11.3</td>
+<td align="right">77</td>
+<td align="left">POINT (14.59057 41.0717)</td>
+</tr>
+<tr class="odd">
+<td align="left">Alife</td>
+<td align="right">117</td>
+<td align="right">12.315972</td>
+<td align="right">9.1</td>
+<td align="right">14.1</td>
+<td align="right">144</td>
+<td align="left">POINT (14.33372 41.33922)</td>
+</tr>
+<tr class="even">
+<td align="left">Alife 152</td>
+<td align="right">152</td>
+<td align="right">12.113986</td>
+<td align="right">9.4</td>
+<td align="right">13.9</td>
+<td align="right">143</td>
+<td align="left">POINT (14.28492 41.34177)</td>
+</tr>
+<tr class="odd">
+<td align="left">Altavilla Irpina</td>
+<td align="right">352</td>
+<td align="right">8.765972</td>
+<td align="right">5.0</td>
+<td align="right">11.1</td>
+<td align="right">144</td>
+<td align="left">POINT (14.78386 41.00628)</td>
+</tr>
+<tr class="even">
+<td align="left">Alvignano</td>
+<td align="right">235</td>
+<td align="right">10.397917</td>
+<td align="right">7.2</td>
+<td align="right">12.2</td>
+<td align="right">144</td>
+<td align="left">POINT (14.39467 41.21825)</td>
+</tr>
+<tr class="odd">
+<td align="left">Apice 597</td>
+<td align="right">597</td>
+<td align="right">6.366197</td>
+<td align="right">3.1</td>
+<td align="right">9.9</td>
+<td align="right">142</td>
+<td align="left">POINT (14.97204 41.1276)</td>
+</tr>
+<tr class="even">
+<td align="left">Ariano Irpino</td>
+<td align="right">678</td>
+<td align="right">5.808333</td>
+<td align="right">3.1</td>
+<td align="right">8.0</td>
+<td align="right">144</td>
+<td align="left">POINT (15.08542 41.14853)</td>
+</tr>
+<tr class="odd">
+<td align="left">Auletta</td>
+<td align="right">194</td>
+<td align="right">9.980556</td>
+<td align="right">3.7</td>
+<td align="right">13.6</td>
+<td align="right">144</td>
+<td align="left">POINT (15.42831 40.55181)</td>
+</tr>
+<tr class="even">
+<td align="left">Avellino Genio Civile</td>
+<td align="right">360</td>
+<td align="right">9.108333</td>
+<td align="right">6.3</td>
+<td align="right">10.9</td>
+<td align="right">144</td>
+<td align="left">POINT (14.78358 40.91197)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="existing-vector-data-model-local-file" class="section level4" number="2.6.1.4">
+<h4>
+<span class="header-section-number">2.6.1.4</span> Existing Vector Data Model | local file<a class="anchor" aria-label="anchor" href="#existing-vector-data-model-local-file"><i class="fas fa-link"></i></a>
+</h4>
+<p>Import in R the Improsta Farm Digital Soil Map.
+The <code><a href="https://r-spatial.github.io/sf/reference/st_read.html">st_read()</a></code> function reads a vector data model written in Shapefile format:</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></span>
+<span><span class="va">imp_dsm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html">st_read</a></span><span class="op">(</span><span class="st">"DigitalSoilMap_Improsta.shp"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Reading layer `DigitalSoilMap_Improsta' from data source </span></span>
+<span><span class="co">#&gt;   `/home/giuliano/datasets/vector/DigitalSoilMap_Improsta.shp' </span></span>
+<span><span class="co">#&gt;   using driver `ESRI Shapefile'</span></span>
+<span><span class="co">#&gt; Simple feature collection with 20 features and 8 fields</span></span>
+<span><span class="co">#&gt; Geometry type: POLYGON</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 496825.7 ymin: 4488864 xmax: 498998.6 ymax: 4489958</span></span>
+<span><span class="co">#&gt; Projected CRS: WGS 84 / UTM zone 33N</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:tab-dsm-improsta">Table 2.6: </span>A preview of the Improsta farm digital soil map</caption>
+<colgroup>
+<col width="3%">
+<col width="5%">
+<col width="9%">
+<col width="10%">
+<col width="7%">
+<col width="9%">
+<col width="8%">
+<col width="11%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Id</th>
+<th align="right">N_UC</th>
+<th align="left">SIGLA_UC</th>
+<th align="left">SIGLA_DEL</th>
+<th align="left">COD_AM</th>
+<th align="right">Area</th>
+<th align="right">Area_ha</th>
+<th align="left">Irriga_ca1</th>
+<th align="left">geometry</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">9</td>
+<td align="left">RIS0</td>
+<td align="left">RIS0.1</td>
+<td align="left">NA</td>
+<td align="right">31725.85</td>
+<td align="right">3</td>
+<td align="left">3, bassa</td>
+<td align="left">POLYGON ((497213.9 4489528,…</td>
+</tr>
+<tr class="even">
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="left">PIN0</td>
+<td align="left">PIN0.1</td>
+<td align="left">NA</td>
+<td align="right">36894.60</td>
+<td align="right">4</td>
+<td align="left">2, media</td>
+<td align="left">POLYGON ((497875.7 4489750,…</td>
+</tr>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="left">CAM0</td>
+<td align="left">CAM0.1</td>
+<td align="left">NA</td>
+<td align="right">27920.44</td>
+<td align="right">3</td>
+<td align="left">2, media</td>
+<td align="left">POLYGON ((497796.7 4489646,…</td>
+</tr>
+<tr class="even">
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">ERB0</td>
+<td align="left">ERB0.1</td>
+<td align="left">NA</td>
+<td align="right">77809.70</td>
+<td align="right">8</td>
+<td align="left">3, bassa</td>
+<td align="left">POLYGON ((497867.8 4489410,…</td>
+</tr>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="left">ERB1</td>
+<td align="left">ERB1.1</td>
+<td align="left">NA</td>
+<td align="right">13630.73</td>
+<td align="right">1</td>
+<td align="left">3, bassa</td>
+<td align="left">POLYGON ((497117.8 4489411,…</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">imp_dsm</span><span class="op">[</span><span class="st">"SIGLA_UC"</span><span class="op">]</span>, axes<span class="op">=</span><span class="cn">TRUE</span>, border<span class="op">=</span><span class="st">"grey"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-37-1.png" width="672"></div>
+</div>
+<div id="existing-vector-data-model-remote-data-source" class="section level4" number="2.6.1.5">
+<h4>
+<span class="header-section-number">2.6.1.5</span> Existing Vector Data Model | remote data source<a class="anchor" aria-label="anchor" href="#existing-vector-data-model-remote-data-source"><i class="fas fa-link"></i></a>
+</h4>
+<p>The <code><a href="https://docs.ropensci.org/osmdata/reference/getbb.html">getbb()</a></code> function can search in OpenStreetMap using a toponym (e.g. <em>Emilia Romagna</em>) and can return a simple feature as output (<code>format_out=sf_polygon</code>):</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/osmdata/">osmdata</a></span><span class="op">)</span></span>
+<span><span class="va">ER</span>  <span class="op">=</span> <span class="fu">osmdata</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/osmdata/reference/getbb.html">getbb</a></span><span class="op">(</span><span class="st">"Emilia Romagna"</span>,format_out<span class="op">=</span><span class="st">"sf_polygon"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">ER</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "polygon"      "multipolygon"</span></span>
+<span><span class="va">ER</span> <span class="op">&lt;-</span> <span class="va">ER</span><span class="op">$</span><span class="va">multipolygon</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">ER</span><span class="op">$</span><span class="va">geometry</span>,reset<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">SF</span><span class="op">$</span><span class="va">geometry</span>,add<span class="op">=</span><span class="cn">T</span>,pch<span class="op">=</span><span class="fl">16</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>, labels<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, labels<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html">st_coordinates</a></span><span class="op">(</span><span class="va">SF</span><span class="op">)</span>,<span class="st">"P1"</span>,pos<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/title.html">title</a></span><span class="op">(</span>xlab<span class="op">=</span><span class="st">"Longitude [degree]"</span>,ylab<span class="op">=</span><span class="st">"Latitude [degree]"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-vector-geodata_files/figure-html/unnamed-chunk-39-1.png" width="672"></div>
+</div>
+</div>
+<div id="export-of-a-simple-feature" class="section level3" number="2.6.2">
+<h3>
+<span class="header-section-number">2.6.2</span> Export of a Simple Feature<a class="anchor" aria-label="anchor" href="#export-of-a-simple-feature"><i class="fas fa-link"></i></a>
+</h3>
+<p>In <a href="vector-data-model.html#scratch-realworld">section creating data from scratch</a> we created a simple feature from scratch. Let’s export / save / write it to a file using a standard vector data model/driver (e.g. geojson format):</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_write.html">st_write</a></span><span class="op">(</span><span class="va">SF</span>,<span class="st">"my_first_simple_feature.geojson"</span><span class="op">)</span></span></code></pre></div>
+<p>Note that the driver used to write data on HDD depends on the file extension provided: in the example above, it was used <code>.geojson</code> but any other extension can be used.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="geospatial-data.html"><span class="header-section-number">1</span> Geospatial Data</a></div>
+<div class="next"><a href="geospatial-data-visualization.html"><span class="header-section-number">3</span> Geospatial Data Visualization</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#vector-data-model"><span class="header-section-number">2</span> Vector Data Model</a></li>
+<li><a class="nav-link" href="#links-1"><span class="header-section-number">2.1</span> LINKS</a></li>
+<li>
+<a class="nav-link" href="#packages-used-1"><span class="header-section-number">2.2</span> Packages used</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#install-libraries"><span class="header-section-number">2.2.1</span> Install libraries</a></li>
+<li><a class="nav-link" href="#load-libraries"><span class="header-section-number">2.2.2</span> Load libraries</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#an-introduction-to-simple-features"><span class="header-section-number">2.3</span> An introduction to simple features</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#why-simple-features"><span class="header-section-number">2.3.1</span> Why simple features?</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#simple-feature-geometry-sfg"><span class="header-section-number">2.4</span> Simple feature geometry (sfg)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#point"><span class="header-section-number">2.4.1</span> POINT</a></li>
+<li><a class="nav-link" href="#linestring"><span class="header-section-number">2.4.2</span> LINESTRING</a></li>
+<li><a class="nav-link" href="#polygon"><span class="header-section-number">2.4.3</span> POLYGON</a></li>
+<li><a class="nav-link" href="#multipoint"><span class="header-section-number">2.4.4</span> MULTIPOINT</a></li>
+<li><a class="nav-link" href="#multilinestring"><span class="header-section-number">2.4.5</span> MULTILINESTRING</a></li>
+<li><a class="nav-link" href="#multipolygon"><span class="header-section-number">2.4.6</span> MULTIPOLYGON</a></li>
+<li><a class="nav-link" href="#geometrycollection"><span class="header-section-number">2.4.7</span> GEOMETRYCOLLECTION</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#simple-features-column-sfc"><span class="header-section-number">2.5</span> Simple features column (sfc)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#from-pure-geometry-of-distinct-points-to-a-set-of-organized-records-sfg"><span class="header-section-number">2.5.1</span> From pure geometry of distinct POINTs to a set of organized records (SFG)</a></li>
+<li><a class="nav-link" href="#crs-coordinate-reference-system"><span class="header-section-number">2.5.2</span> CRS (Coordinate Reference System)</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#the-sf-class"><span class="header-section-number">2.6</span> The SF class</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#creation-of-a-simple-feature"><span class="header-section-number">2.6.1</span> Creation of a Simple Feature</a></li>
+<li><a class="nav-link" href="#export-of-a-simple-feature"><span class="header-section-number">2.6.2</span> Export of a Simple Feature</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/03-vector-geodata.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/03-vector-geodata.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>A Minimal Set of Lectures Notes</strong>" was written by Giuliano Langella. It was last built on 2024-03-14.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
