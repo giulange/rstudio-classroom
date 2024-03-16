@@ -31,3 +31,5 @@ bookcraft/courses/book/rendera9804d57a284.rds
 bookcraft/datasets/
 
 *.rds
+
+bookcraft/rstudio/

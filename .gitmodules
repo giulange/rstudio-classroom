@@ -1,3 +1,0 @@
-[submodule "bookcraft/bookdown-demo"]
-	path = bookcraft/bookdown-demo
-	url = git@github.com:rstudio/bookdown-demo.git
