@@ -1,7 +1,7 @@
 --- 
 title: "A Minimal Set of Lectures Notes"
 author: "Giuliano Langella"
-date: "2024-03-14"
+date: "2024-03-16"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
 #output: bookdown::gitbook

@@ -33,3 +33,5 @@ bookcraft/datasets/
 *.rds
 
 bookcraft/rstudio/
+
+bookcraft/artwork_old/

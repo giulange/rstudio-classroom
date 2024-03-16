@@ -56,6 +56,11 @@ defUID=1000
 USERNAME=giuliano
 PSWD=antonietta
 PORT=8487
+PERSISTENCY_BASE_PATH=~/docker-persistencies/rstudio_bookcraft
+IN_DATASET_PATH=${PERSISTENCY_BASE_PATH}/Datasets
+IN_ARTWORK_PATH=${PERSISTENCY_BASE_PATH}/artwork
+IN_ASSIGNMENTS_PATH=${PERSISTENCY_BASE_PATH}/assignments
+IN_SCRIPTS_PATH=${PERSISTENCY_BASE_PATH}/scripts
 IN_Rmd_PATH=~/git/rstudio-classroom/bookcraft
 #OUT_html_PATH=~/docker-persistencies/php_apache/html
 CONTAINER_HOME=/home/$USERNAME
@@ -119,7 +124,11 @@ cat << EOF
     --name $CONTAINER_NAME 
     --restart always 
     -v ${HOST_PROJ_FOLDER}:${CONTAINER_HOME}
-    -e USER=$USERNAME 
+    -v ${IN_ARTWORK_PATH}:${CONTAINER_HOME}/artwork
+    -v ${IN_ASSIGNMENTS_PATH}:${CONTAINER_HOME}/assignments
+    -v ${IN_DATASET_PATH}:${CONTAINER_HOME}/datasets
+    -v ${IN_SCRIPTS_PATH}:${CONTAINER_HOME}/scripts
+    -e USER=$USERNAME
     -e USERID=$defUID -e GROUPID=$defUID -e PASSWORD=$PSWD 
     -p $PORT:8787 
     $IMAGE
@@ -133,6 +142,10 @@ if [ "$DRYRUN" -eq "0" ]; then
 		--name $CONTAINER_NAME \
 		--restart always \
 		-v ${HOST_PROJ_FOLDER}:${CONTAINER_HOME} \
+    -v ${IN_ARTWORK_PATH}:${CONTAINER_HOME}/artwork \
+    -v ${IN_ASSIGNMENTS_PATH}:${CONTAINER_HOME}/assignments \
+    -v ${IN_DATASET_PATH}:${CONTAINER_HOME}/datasets \
+    -v ${IN_SCRIPTS_PATH}:${CONTAINER_HOME}/scripts \
 		-e USER=$USERNAME \
 		-e USERID=$defUID -e GROUPID=$defUID -e PASSWORD=$PSWD \
 		-p $PORT:8787 \
@@ -148,21 +161,29 @@ echo ""
 IP=$(hostname -I | cut -d' ' -f1)
 echo ""
 echo "----------------------------------------------------------------"
-echo "goto         :  $IP:$PORT"
-echo "user         :  $USERNAME"
-echo "pswd         :  $PSWD"
+echo "goto           :  $IP:$PORT"
+echo "user           :  $USERNAME"
+echo "pswd           :  $PSWD"
 echo "----------------------------------------------------------------"
-echo "DRYRUN       :  $DRYRUN"
-echo "UID          :  $defUID"
-echo "GID          :  $defUID"
+echo "DRYRUN         :  $DRYRUN"
+echo "UID            :  $defUID"
+echo "GID            :  $defUID"
 echo "----------------------------------------------------------------"
-echo "IMAGE        :  $IMAGE"
-echo "CONTAINER    :  $CONTAINER_NAME"
-echo "IN  HOST     :  $HOST_PROJ_FOLDER"
-#echo "OUT HOST     :  $HOST_HTML_FOLDER"
-echo "IN  CONT.    :  ${CONTAINER_HOME}/"
-#echo "IN  CONT.    :  ${CONTAINER_HOME}/${PROJECT_NAME}"
-#echo "OUT CONT.    :  ${CONTAINER_HOME}/${PROJECT_NAME}/_book"
+echo "IMAGE          :  $IMAGE"
+echo "CONTAINER      :  $CONTAINER_NAME"
+echo "IN  HOST       :  --> $HOST_PROJ_FOLDER"
+#echo "OUT HOST       :  $HOST_HTML_FOLDER"
+echo "IN  CONT.      :  <-- ${CONTAINER_HOME}/"
+#echo "IN  CONT.      :  ${CONTAINER_HOME}/${PROJECT_NAME}"
+#echo "OUT CONT.      :  ${CONTAINER_HOME}/${PROJECT_NAME}/_book"
+echo "ARTWORK HOST   :  --> ${IN_ARTWORK_PATH}"
+echo "ARTWORK CONT.  :  <-- ${CONTAINER_HOME}/artwork"
+echo "ASSIGN. HOST   :  --> ${IN_ASSIGNMENTS_PATH}"
+echo "ASSIGN. CONT.  :  <-- ${CONTAINER_HOME}/assignments"
+echo "DATASET HOST   :  --> ${IN_DATASET_PATH}"
+echo "DATASET CONT.  :  <-- ${CONTAINER_HOME}/datasets"
+echo "SCRIPTS HOST   :  --> ${IN_SCRIPTS_PATH}"
+echo "SCRIPTS CONT.  :  <-- ${CONTAINER_HOME}/scripts"
 echo "----------------------------------------------------------------"
 echo ""
 echo ""
