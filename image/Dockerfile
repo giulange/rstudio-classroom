@@ -12,6 +12,12 @@ RUN apt-get -y install gdal-bin libgdal-dev python3-gdal libgsl-dev
 
 RUN apt-get -y install libmagick++-dev
 
+RUN apt-get -y install libpq-dev
+
+#---GRANT root privileges to rstudio user---
+# rstudio user will become e.g. giuliano according to the username set during the container run
+RUN usermod -aG sudo rstudio
+
 #--- KERAS ---
 RUN apt -y install python3-pip python3-venv
 #RUN apt -y install build-essential python-dev

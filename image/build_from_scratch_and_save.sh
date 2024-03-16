@@ -1,10 +1,10 @@
 #!/bin/bash
 #
 # NOTES
-#  This script build the rstudio-server image from scratch.
+#  This script builds the rstudio-server image from scratch.
 #  The build.sh script also install the required dependencies and
 #  the required packages. 
-#  The container is then committed and finally saved on HDD as backup.
+#  The image is then committed and finally saved on HDD as backup.
 #
 #  Once the whole procedure in this script is done, the image is ready 
 #  to produce the two (or more) containers required.

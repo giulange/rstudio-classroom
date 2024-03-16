@@ -70,7 +70,7 @@ for Student in ${Students[@]}
 done
 
 echo ""
-read -p "Removing useless users... Are you sure? " -n 1 -r
+read -p "Removing useless users... Are you sure? (y | n)  :" -n 1 -r
 echo ""
 echo ""
 if [[ $REPLY =~ ^[Nn]$ ]]
