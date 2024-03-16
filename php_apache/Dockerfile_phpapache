@@ -1,0 +1,31 @@
+FROM php:7.2-apache
+
+RUN apt-get update && apt-get install -y \
+	libpq-dev \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev 
+
+#RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+#RUN docker-php-ext-configure gd 
+#RUN docker-php-ext-install -j$(nproc) gd
+
+# stuff related to PSQL:
+RUN apt-get install -y libicu-dev
+RUN docker-php-ext-configure intl
+RUN docker-php-ext-install intl
+RUN docker-php-ext-install pgsql pdo pdo_pgsql
+
+# stuff to edit text in container
+RUN apt-get update && apt-get install -y vim
+
+# stuff related to email sending:
+RUN apt-get update && apt-get install -y sendmail
+
+# gdal
+#RUN apt-get install -y gdal-bin 
+
+RUN usermod --non-unique --uid 1000 www-data \
+  && groupmod --non-unique --gid 1000 www-data \
+  && chown -R www-data:www-data /var/www
+

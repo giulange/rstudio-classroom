@@ -1,0 +1,39 @@
+# Usa l'immagine (locale) di base usata da giulange per didactics & research
+#  - check that the rocker/tidyverse:giulange is created in build_bookcraft.sh as REF_IMAGE
+FROM rocker/tidyverse:giulange
+
+# Installa le dipendenze necessarie
+RUN apt-get update && apt-get install -y \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    pandoc \
+    pandoc-citeproc
+
+# Installa Node.js
+RUN apt-get update \
+  && apt-get install -y nodejs npm \
+  && rm -rf /var/lib/apt/lists/*
+
+# Crea una directory di lavoro all'interno del container
+# nel run il container deve puntare a bookcraft/courses per cui non è necessario copiare nessun file
+# ~/git/rstudio-classroom/bookcraft ---> /app
+#WORKDIR /app
+
+#COPY ../bookcraft/courses/package.json . 
+
+# Installa le dipendenze per Node.js
+#RUN npm install
+
+# Installa i pacchetti R richiesti per Bookdown
+RUN R -e "install.packages(c('bookdown', dependencies = TRUE))"
+# See https://github.com/crsh/citr ::
+RUN R -e "devtools::install_github('crsh/citr')"
+# To create PDF, see https://bookdown.org/yihui/bookdown/latex.html 
+RUN R -e "tinytex::install_tinytex()"
+
+# Cambia la directory di lavoro per il progetto Bookdown
+#WORKDIR /home/courses/book/en
+
+# Esegui la generazione del libro quando il container viene avviato
+#CMD ["R", "-e", "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"]
+

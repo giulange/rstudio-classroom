@@ -1,0 +1,27 @@
+{
+    "id": "6ECA57A2",
+    "path": "~/lectures/03-vector-geodata.Rmd",
+    "project_path": "03-vector-geodata.Rmd",
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1710437093418.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "11,18",
+        "scrollLine": "6",
+        "docOutlineVisible": "1"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1710437760,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1710437760859,
+    "read_only": false,
+    "read_only_alternatives": []
+}

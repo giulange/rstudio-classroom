@@ -1,0 +1,10 @@
+h1:geospatial-data Geospatial Data
+h2:links LINKS
+h2:packages-used Packages used
+h2:non-geographic-data Non-geographic data
+tab:tab-cars Here is a preview of the cars data frame
+fig:cars-df This is a figure created using the examples provided in documentation.
+h2:spatial-data-have-spatial-reference Spatial data have spatial reference
+h2:spatial-data-models Spatial data models
+h3:vector-vs-raster-data-models Vector vs Raster data models
+
