@@ -4,7 +4,7 @@
 DOCKERFILE=Dockerfile_phpapache
 
 # INPUT ARGUMENTS
-defval="php_apache"
+defval="php_apache_rstudio"
 image=${1:-$defval}
 
 def_cache=""

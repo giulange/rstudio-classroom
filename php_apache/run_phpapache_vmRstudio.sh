@@ -17,7 +17,7 @@
 # ========= PARAMETERS =============
 PORT_WEB=8080
 PORT_SSL=443
-DEF_IMAGE_NAME=php_apache
+DEF_IMAGE_NAME=php_apache_rstudio
 DEF_CONTAINER_NAME=php_apache-booklets
 DEF_NET_NAME=bridge
 # On VM RStudio Didactics on Granatellum proxmox:
