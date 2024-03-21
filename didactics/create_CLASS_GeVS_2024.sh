@@ -25,6 +25,8 @@ Sabrina.Ambrosio
 FrancescoMaria.DiGuida
 Alessia.DeRosa
 Nausicaa.Pollaro
+Raffaela.Ofano
+Elisabetta.Pignoli
 )
 
 for Student in ${Students[@]} 
