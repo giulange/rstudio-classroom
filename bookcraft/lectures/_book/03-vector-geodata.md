@@ -351,7 +351,7 @@ One <b>sfg</b> object contains only a single simple feature geometry. <br>
 A <b>simple feature geometry column</b> (<b>sfc</b>) can collect more **sfg** objects:
 
 ```r
-points_sfc = st_sfc(P1, P1)
+points_sfc = st_sfc(P1, P2)
 class(points_sfc)
 #> [1] "sfc_POINT" "sfc"
 ```
@@ -363,10 +363,10 @@ print(points_sfc)
 #> Geometry set for 2 features 
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 5 ymin: 2 xmax: 5 ymax: 2
+#> Bounding box:  xmin: 1 ymin: 2 xmax: 5 ymax: 3
 #> CRS:           NA
 #> POINT (5 2)
-#> POINT (5 2)
+#> POINT (1 3)
 ```
 
 In addition, as you can see in the print above, the **sfc** can manage also the information about the Coordinate Reference System (**CRS**) in use.
@@ -426,10 +426,10 @@ print(points_sfc)
 #> Geometry set for 2 features 
 #> Geometry type: POINT
 #> Dimension:     XY
-#> Bounding box:  xmin: 5 ymin: 2 xmax: 5 ymax: 2
+#> Bounding box:  xmin: 1 ymin: 2 xmax: 5 ymax: 3
 #> CRS:           NA
 #> POINT (5 2)
-#> POINT (5 2)
+#> POINT (1 3)
 ```
 
 The default value of EPSG (SRID) and proj4string is <b>NA</b> (Not Available), as can be verified with the function `st_crs( )`:
@@ -501,8 +501,12 @@ In order to create a SF we need to fulfil the following steps:
 ### Creation of a Simple Feature
 A simple feature can be created:
 
- - from scratch, using synthetic/real-world data
- - from a vector data model stored in a local/remote file
+ - from scratch
+   - using synthetic data 
+   - using real-world data
+ - from a vector data model stored in a
+   - local file
+   - remote file
 
 #### From scratch | synthetic data
 Let's build an example from scratch.

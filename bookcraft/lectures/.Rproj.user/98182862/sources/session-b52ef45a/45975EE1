@@ -1,27 +1,27 @@
 {
-    "id": "4F7B833C",
-    "path": "~/lectures/02-geospatial-data.Rmd",
-    "project_path": "02-geospatial-data.Rmd",
+    "id": "45975EE1",
+    "path": "~/lectures/20-Exercises.Rmd",
+    "project_path": "20-Exercises.Rmd",
     "type": "r_markdown",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1710584329036.0,
+    "created": 1710782302747.0,
     "source_on_save": false,
-    "relative_order": 2,
+    "relative_order": 4,
     "properties": {
+        "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "docOutlineVisible": "1",
-        "cursorPosition": "29,3",
-        "scrollLine": "0"
+        "cursorPosition": "38,43",
+        "scrollLine": "32"
     },
     "folds": "",
-    "lastKnownWriteTime": 1710616936,
+    "lastKnownWriteTime": 1710933129,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1710616936743,
+    "last_content_update": 1710933129438,
     "read_only": false,
     "read_only_alternatives": []
 }

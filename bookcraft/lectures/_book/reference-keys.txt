@@ -74,3 +74,8 @@ geospatial-data-visualization
 basic-plot-function
 advanced-ggplot2-library
 advanced-tmaps-library
+exercises
+vector-geodata
+upper-secondary-school
+agraria-teching-rooms
+instructions
